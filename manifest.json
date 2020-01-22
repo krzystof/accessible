@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Accessible",
+  "version": "0.1",
+  "description": "A (work-in-progress) tool that enhance brwosing the web.",
+  "icons": {
+    "48": "a.svg"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content_scripts/accessible.js"],
+      "css": ["content_scripts/palette.css"]
+    }
+  ],
+  "background": {
+    "scripts": ["palette.js"]
+  }
+}

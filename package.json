@@ -1,0 +1,11 @@
+{
+  "name": "accessible",
+  "version": "0.1.0",
+  "description": "A wannabe accessible powertool for the browser",
+  "author": "Christophe Graniczny <getintouch@christophegraniczny.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "web-ext run --url duckduckgo.com --browser-console"
+  }
+}
