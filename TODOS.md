@@ -9,11 +9,11 @@ can click on the page.
 - [X] Create basic input box, show it when pressing `,`
 - [X] Box styles
 - [X] Close on blur
-- [ ] Switch to ts
-- [ ] Index the interactive elements
-- [ ] If content is not empty, show a dropdown with the matching links
-- [ ] Ctrl-n and ctrl-p navigates the list
-- [ ] Enter opens the selected link
+- [X] Index the interactive elements
+- [X] If content is not empty, show a dropdown with the matching links
+- [X] Ctrl-n and ctrl-p navigates the list
+- [X] Enter opens the selected link
+- [ ] Switch to ts and refactor
 - [ ] Ctrl+enter opens the first link if none selected
 - [ ] Shift+enter focus the element and center the page
 - [ ] Highlight the selected node when browsing the list

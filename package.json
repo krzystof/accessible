@@ -6,6 +6,6 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "web-ext run --url duckduckgo.com --browser-console"
+    "dev": "web-ext run --url https://en.wikipedia.org/wiki/Monopod_(creature)"
   }
 }

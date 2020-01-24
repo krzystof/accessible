@@ -4,10 +4,6 @@
 The goal of Accessible is to provide commands that I think should be
 native to the browser: *We want better keyboard features.*
 
-[roadmap](project/roadmap)
-[wip](project/wip)
-
-
 ## Development
 
 Run `yarn dev` to run the extension in debug mode in Firefox.

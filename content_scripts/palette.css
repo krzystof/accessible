@@ -1,3 +1,8 @@
+:root {
+  --palette-color: black;
+  --palette-bg-color: white;
+}
+
 .accessible-palette * {
   box-sizing: border-box;
 }
@@ -9,6 +14,7 @@
   top: 0;
   left: 0;
   display: none;
+  z-index: 10000000;
 }
 
 .accessible-palette.visible {
@@ -16,16 +22,59 @@
 }
 
 .accessible-palette .wrap {
-  border: 5px solid orange;
+  /* border: 5px solid orange; */
   border-radius: 3px;
   max-width:  320px;
   position: relative;
   top: 50px;
   margin: auto;
+  background: var(--palette-bg-color);
+  color: var(--palette-color);
  }
 
 .accessible-palette .wrap input {
+  position: relative;
   font-size: 30px;
   padding: 5px 10px;
   width: 100%;
+  background: var(--palette-bg-color);
+  color: var(--palette-color);
+}
+
+.accessible-palette .wrap input:focus {
+  outline: 5px solid orange;
+  z-index: 1;
+}
+
+.accessible-palette .wrap .dropdown {
+  position: absolute;
+  width: 100%;
+  height: min-content;
+  line-height: 1.2;
+  /* border-left: 5px solid orange; */
+  /* border-right: 5px solid orange; */
+  /* border-bottom: 5px solid orange; */
+}
+
+.accessible-palette .wrap .dropdown-result {
+  position: relative;
+  background: var(--palette-bg-color);
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+  text-align: left;
+  border: none;
+}
+
+.accessible-palette .wrap .dropdown-result:focus {
+  border: none;
+  outline: 5px solid orange;
+  z-index: 1;
+}
+
+/* Debug mode for the page */
+a {
+  border: 4px solid red !important;
 }
