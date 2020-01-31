@@ -23,6 +23,7 @@
     // Model
     let filteredLinks = []
     let highlightedResultIndex: null | number = null
+    let dropdownItems: HTMLButtonElement[] = []
     // end model
 
     // begin Initialise the node elements
@@ -42,18 +43,21 @@
     // end
 
     function showDropdown(items: HTMLAnchorElement[]) {
-      const resultItems = []
-
-      dropdown.innerHTML = '';
+      dropdown.innerHTML = ''
+      dropdownItems = []
 
       items.forEach((item, index) => {
         const result = document.createElement('button')
         const itemClass = `dropdown-result-num-${index}`
         result.classList.add('dropdown-result')
         result.classList.add(itemClass)
+        result.addEventListener('click', () => {
+          item.click()
+        })
         let t = item.textContent
         result.textContent = t || 'no content for this link'
         // result.referencedNode = item
+        dropdownItems.push(result)
         dropdown.appendChild(result)
       })
     }
@@ -65,6 +69,7 @@
 
         let newFilteredLinks = []
         for (let l of links.values()) {
+          // make it case insensitive
           if (l && l.textContent && l.textContent.includes(eventTarget.value)) {
             newFilteredLinks.push(l)
           }
@@ -121,7 +126,7 @@
 
         highlightedResultIndex -= 1
 
-        // dropdown.childNodes[highlightedResultIndex].focus()
+        dropdownItems[highlightedResultIndex].focus()
       },
       highlightNextResult() {
         const shownItems = filteredLinks.length
@@ -133,7 +138,7 @@
 
         if (highlightedResultIndex === null) {
           highlightedResultIndex = 0
-        } else if (highlightedResultIndex + 1 === MAX_DROPDOWN_ITEMS) {
+        } else if (highlightedResultIndex + 1 === shownItems) {
           return // because we're at the end of the list
         } else {
           highlightedResultIndex += 1
@@ -141,7 +146,7 @@
 
         console.log('>>>', 'highlightedResultIndex', highlightedResultIndex)
 
-        // dropdown.childNodes[highlightedResultIndex].focus()
+        dropdownItems[highlightedResultIndex].focus()
       },
       validateSelection() {
         if (filteredLinks.length === 0) {
@@ -152,8 +157,6 @@
           // dropdown.childNodes[0].referencedNode.click()
           return
         }
-
-        // dropdown.childNodes[highlightedResultIndex].referencedNode.click()
       },
     }
   }
@@ -171,7 +174,6 @@
     console.log('Keylog>>>', e)
 
     if (e.ctrlKey && e.key === 'f') {
-      console.log('>>>', 'BOOM!')
       // browser.runtime.sendMessage('openPalette')
 
       palette.show()
@@ -182,6 +184,7 @@
     }
 
     if (e.ctrlKey && e.key === 'n') {
+      console.log('>>>', 'show next')
       palette.highlightNextResult()
     }
 

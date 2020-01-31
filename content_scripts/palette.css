@@ -1,10 +1,16 @@
 :root {
+  --brutal-color: black;
+  --focus-color: red;
   --palette-color: black;
   --palette-bg-color: white;
 }
 
 .accessible-palette * {
   box-sizing: border-box;
+}
+
+.accessible-palette button::-moz-focus-inner {
+  border: 0;
 }
 
 .accessible-palette {
@@ -22,9 +28,8 @@
 }
 
 .accessible-palette .wrap {
-  /* border: 5px solid orange; */
   border-radius: 3px;
-  max-width:  320px;
+  max-width:  500px;
   position: relative;
   top: 50px;
   margin: auto;
@@ -39,10 +44,12 @@
   width: 100%;
   background: var(--palette-bg-color);
   color: var(--palette-color);
+  border: 5px solid var(--brutal-color);
 }
 
 .accessible-palette .wrap input:focus {
-  outline: 5px solid orange;
+  /* box-shadow: -5px 5px 0 0 var(--focus-color); */
+  outline: 5px solid var(--focus-color);
   z-index: 1;
 }
 
@@ -51,6 +58,8 @@
   width: 100%;
   height: min-content;
   line-height: 1.2;
+  padding-top: 10px;
+  border: 3px solid var(--brutal-color);
   /* border-left: 5px solid orange; */
   /* border-right: 5px solid orange; */
   /* border-bottom: 5px solid orange; */
@@ -70,7 +79,7 @@
 
 .accessible-palette .wrap .dropdown-result:focus {
   border: none;
-  outline: 5px solid orange;
+  outline: 5px solid var(--focus-color);
   z-index: 1;
 }
 

@@ -15,9 +15,10 @@ can click on the page.
 - [X] If content is not empty, show a dropdown with the matching links
 - [X] Ctrl-n and ctrl-p navigates the list
 - [X] Enter opens the selected link
-- [ ] Switch to ts and refactor
-- [ ] Update styles to make it a bit nicer
+- [X] Switch to ts
+- [X] Update styles to make it a bit nicer
 - [ ] TDD: setup tests
+- [ ] Refactor the palette as a class
 - [ ] Clear items if query is empty
 - [ ] Enter opens the first link if none selected
 - [ ] Press `ctrl-f` to center the page on the highlighted item, and focus it
