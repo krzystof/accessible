@@ -17,9 +17,11 @@ can click on the page.
 - [X] Enter opens the selected link
 - [X] Switch to ts
 - [X] Update styles to make it a bit nicer
-- [ ] TDD: setup tests
-- [ ] Refactor the palette as a class
+- [.] Refactor the palette as a class
+- [ ] TDD: setup tests with jest and dom testing library
+- [ ] Write a test to open the dropdown, select the third element, then the second,  and click it
 - [ ] Clear items if query is empty
+- [ ] Hide the dropdown if it's empty
 - [ ] Enter opens the first link if none selected
 - [ ] Press `ctrl-f` to center the page on the highlighted item, and focus it
 - [ ] Close the palette on `esc`
@@ -62,3 +64,4 @@ can click on the page.
 * highlight pa11y error on the page
 * text based accessibility mode: try what it looks like (with the code of the element beeing read shown on the screen)
 * offer a pluggin system API?
+* Debounce the filtering
