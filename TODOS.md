@@ -2,9 +2,9 @@
 
 ## v0.1 - Click Elements
 
-Keys: f, ctrl-n, ctrl-p, enter
+Keys: ctrl-f, ctrl-n, ctrl-p, enter
 
-Scenario: When I press `f`, a popup shows in the center of the screen.
+Scenario: When I press `ctrl-f`, a popup shows in the center of the screen.
 When I type, it shows a dropdown which contains the links / buttons I
 can click on the page.
 
@@ -16,17 +16,15 @@ can click on the page.
 - [X] Ctrl-n and ctrl-p navigates the list
 - [X] Enter opens the selected link
 - [ ] Switch to ts and refactor
+- [ ] Update styles to make it a bit nicer
+- [ ] TDD: setup tests
 - [ ] Clear items if query is empty
 - [ ] Enter opens the first link if none selected
-- [ ] Highlight the selected node when browsing the list
-- [ ] Press `f` to center the page on the highlighted item
+- [ ] Press `ctrl-f` to center the page on the highlighted item, and focus it
 - [ ] Close the palette on `esc`
-- [ ] Don't open the box if the user is focused on the original website
 - [ ] Return the focus to the element when closing the list
 - [ ] Prevent clashes with sites shortcuts
 - [ ] Package and install on my instance of Firefox
-
-----
 
 ## v0.2 - Focus Elements (ctrl-f)
 ## v0.3 - User Focus Styles (settings)
@@ -34,20 +32,23 @@ can click on the page.
 ## v1.0 - ?
 
 ----
+# Next
 
+*P1*
+* Scope CSS!
+* Update filter to show interactive element
+* Show a nice description of an element (like what element it is)
+
+----
 # Open ideas
-
-* Use postcss, and scope css
+* Highlight the selected node when browsing the list
+* Use postcss
 * navigate focus with arrows or hjkl
 * case insensitive search
 * fuzzy search
-* commands:
-  * help or ?: show help menu
-  * go or open: list links, open links
-  * click: click a button or an interactive element
-  * copy: copy the html or text of an element
-  * search or /: search text in page
-  * focus: focus an element
+* Command: help or ?: show help menu
+* copy: copy the html or text of an element
+* search or /: search text in page
 * Commands accepts a CSS selector, a text selector, or the focused element
 * ctrl p-n navigate the list
 * tab: preview the highlighted element

@@ -3,29 +3,26 @@
     return
   }
   window.hasRun = true
+  console.log('>>>', 'The extension is running')
 
   const MAX_DROPDOWN_ITEMS = 5
 
-  console.log('>>>', 'Then extension has run!')
-
-  browser.runtime.onMessage.addListener((message) => {
-    if (message.command === 'try') {
-      console.log('try message >>>', message)
-    }
-  })
+  // browser.runtime.onMessage.addListener((message) => {
+  //   if (message.command === 'try') {
+  //     console.log('try message >>>', message)
+  //   }
+  // })
 
   function buildPalette() {
     console.log('>>>', 'Building the palette')
 
-    console.log('>>>', 'window', document)
-
     const links = document.querySelectorAll('a')
 
-    console.log('>>>', 'links', links)
+    console.log('>>>', 'Links on the page: ', links)
 
     // Model
     let filteredLinks = []
-    let highlightedResultIndex = null
+    let highlightedResultIndex: null | number = null
     // end model
 
     // begin Initialise the node elements
@@ -44,7 +41,7 @@
     const input = document.createElement('input')
     // end
 
-    function showDropdown(items) {
+    function showDropdown(items: HTMLAnchorElement[]) {
       const resultItems = []
 
       dropdown.innerHTML = '';
@@ -56,18 +53,19 @@
         result.classList.add(itemClass)
         let t = item.textContent
         result.textContent = t || 'no content for this link'
-        result.referencedNode = item
+        // result.referencedNode = item
         dropdown.appendChild(result)
       })
     }
 
-    input.addEventListener('input', (event) => {
+    input.addEventListener('input', (event: Event) => {
       try {
-        console.log('input:', event.target.value)
+        const eventTarget = event.target as HTMLInputElement
+        console.log('input:', eventTarget.value)
 
         let newFilteredLinks = []
         for (let l of links.values()) {
-          if (l.textContent.includes(event.target.value)) {
+          if (l && l.textContent && l.textContent.includes(eventTarget.value)) {
             newFilteredLinks.push(l)
           }
         }
@@ -99,6 +97,7 @@
         return !el.classList.contains('visible')
       },
       show() {
+        console.log('>>>', 'showing the palette')
         el.classList.add('visible')
         input.focus()
       },
@@ -122,7 +121,7 @@
 
         highlightedResultIndex -= 1
 
-        dropdown.childNodes[highlightedResultIndex].focus()
+        // dropdown.childNodes[highlightedResultIndex].focus()
       },
       highlightNextResult() {
         const shownItems = filteredLinks.length
@@ -142,7 +141,7 @@
 
         console.log('>>>', 'highlightedResultIndex', highlightedResultIndex)
 
-        dropdown.childNodes[highlightedResultIndex].focus()
+        // dropdown.childNodes[highlightedResultIndex].focus()
       },
       validateSelection() {
         if (filteredLinks.length === 0) {
@@ -150,16 +149,16 @@
         }
 
         if (highlightedResultIndex === null) {
-          dropdown.childNodes[0].referencedNode.click()
+          // dropdown.childNodes[0].referencedNode.click()
           return
         }
 
-        dropdown.childNodes[highlightedResultIndex].referencedNode.click()
+        // dropdown.childNodes[highlightedResultIndex].referencedNode.click()
       },
     }
   }
 
-  let palette
+  let palette: any
 
   try {
     palette = buildPalette()
@@ -168,13 +167,12 @@
     return
   }
 
-  window.onkeyup = (e) => {
+  window.onkeyup = (e: KeyboardEvent) => {
     console.log('Keylog>>>', e)
 
-    if (e.code === 'Comma') {
-      browser.runtime.sendMessage('openPalette')
-
-      // don't show if an input, select, link, button is focused
+    if (e.ctrlKey && e.key === 'f') {
+      console.log('>>>', 'BOOM!')
+      // browser.runtime.sendMessage('openPalette')
 
       palette.show()
     }

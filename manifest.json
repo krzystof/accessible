@@ -9,11 +9,11 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["content_scripts/accessible.js"],
+      "js": ["content_scripts/dist/main.js"],
       "css": ["content_scripts/palette.css"]
     }
   ],
   "background": {
-    "scripts": ["palette.js"]
+    "scripts": ["temp_experience_with_bg_scripts.js"]
   }
 }

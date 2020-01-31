@@ -6,6 +6,15 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "web-ext run --url https://en.wikipedia.org/wiki/Monopod_(creature)"
+    "dev": "webpack",
+    "web-ext": "web-ext run --url 'https://en.wikipedia.org/wiki/Monopod_(creature)'"
+  },
+  "devDependencies": {
+    "@types/dom-inputevent": "^1.0.5",
+    "@types/firefox-webext-browser": "^70.0.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
