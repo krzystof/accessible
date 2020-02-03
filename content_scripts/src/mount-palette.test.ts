@@ -47,13 +47,16 @@ describe('click interactive element with the keyboard', () => {
   })
 
   test('highlight an item, then press enter to navigate to it', async () => {
+    const spyClick = jest.fn()
     document.body.innerHTML = `
       <div>
         <a href="javascript">javascript</a>
-        <a href="java">java</a>
+        <a href="java" class="java">java</a>
         <a href="php">php</a>
       </div>
     `
+    const javaLink = document.querySelector('.java')!
+    javaLink.addEventListener('click', spyClick)
 
     const { body } = testPalette(document)
 
@@ -73,8 +76,6 @@ describe('click interactive element with the keyboard', () => {
     fireEvent.keyUp(document.body, { key: 'n', ctrlKey: true })
     expect(dropdown.getByText('java')).toHaveFocus()
 
-    const spyClick = jest.fn()
-    dropdown.getByText('java').addEventListener('click', spyClick)
     expect(spyClick).not.toHaveBeenCalled()
 
     fireEvent.keyUp(document.body, { key: 'Enter' })
