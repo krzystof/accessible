@@ -41,6 +41,7 @@ can click on the page.
 * Scope CSS!
 * Update filter to show interactive element
 * Show a nice description of an element (like what element it is)
+* Update README
 
 ----
 # Open ideas

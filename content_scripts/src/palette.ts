@@ -8,27 +8,34 @@ type PaletteDOMElements = {
   input: HTMLInputElement
 }
 
-export class Palette extends EventTarget {
+type PaletteCallbacks = {
+  getLinks: () => Promise<IterableIterator<HTMLAnchorElement>>
+}
+
+export class Palette {
   ui: PaletteDOMElements
+  handlers: PaletteCallbacks
 
   docLinks: HTMLAnchorElement[] = []
   dropdownItems: HTMLButtonElement[] = []
 
   highlightedResultIndex: null | number = null
 
-  constructor(elements: PaletteDOMElements) {
-    super()
+  constructor(elements: PaletteDOMElements, callbacks: PaletteCallbacks) {
     this.ui = elements
+    this.handlers = callbacks
 
     this.initUi()
     this.bindEventHandlers()
 
-    this.dispatchEvent(new CustomEvent('getLinks'))
+    this.handlers.getLinks()
+      .then(links => this.setLinks(links))
   }
 
   // Public Palette API
 
   setLinks(links: IterableIterator<HTMLAnchorElement>) {
+    console.log('>>>', 'setting the links', links)
     this.docLinks = Array.from(links)
   }
 
@@ -41,7 +48,7 @@ export class Palette extends EventTarget {
     this.ui.input.focus()
   }
 
-  private highlightPreviousResult() {
+  highlightPreviousResult() {
     const shownItems = this.dropdownItems.length
 
     if (shownItems === 0) {
@@ -64,7 +71,7 @@ export class Palette extends EventTarget {
     this.dropdownItems[this.highlightedResultIndex].focus()
   }
 
-  private highlightNextResult() {
+  highlightNextResult() {
     const shownItems = this.dropdownItems.length
 
     if (shownItems === 0) {
@@ -84,7 +91,7 @@ export class Palette extends EventTarget {
     this.dropdownItems[this.highlightedResultIndex].focus()
   }
 
-  private validateSelection() {
+  validateSelection() {
     if (this.dropdownItems.length === 0) {
       return
     }
@@ -92,28 +99,6 @@ export class Palette extends EventTarget {
     if (this.highlightedResultIndex === null) {
       this.dropdownItems[0].click()
       return
-    }
-  }
-
-  handleKeyUp(event: KeyboardEvent) {
-    if (event.ctrlKey && event.key === 'f') {
-      this.show()
-    }
-
-    if (this.isHidden()) {
-      return
-    }
-
-    if (event.ctrlKey && event.key === 'n') {
-      this.highlightNextResult()
-    }
-
-    if (event.ctrlKey && event.key === 'p') {
-      this.highlightPreviousResult()
-    }
-
-    if (event.key === 'Enter') {
-      this.validateSelection()
     }
   }
 

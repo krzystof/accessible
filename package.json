@@ -7,7 +7,7 @@
   "private": false,
   "scripts": {
     "dev": "webpack",
-    "web-ext": "web-ext run --url 'https://en.wikipedia.org/wiki/Monopod_(creature)'"
+    "web-ext": "web-ext run --url 'https://en.wikipedia.org/wiki/JavaScript'"
   },
   "devDependencies": {
     "@types/dom-inputevent": "^1.0.5",

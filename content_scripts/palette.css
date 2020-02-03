@@ -54,6 +54,7 @@
 }
 
 .accessible-palette .wrap .dropdown {
+  background: var(--palette-bg-color);
   position: absolute;
   width: 100%;
   height: min-content;
