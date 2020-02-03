@@ -2,36 +2,32 @@ import {queries, wait, within, fireEvent} from '@testing-library/dom'
 import {mountPalette} from './mount-palette'
 import '@testing-library/jest-dom'
 
-function bindUserEvents(body: HTMLBodyElement) {
-  return {
-    // TODO type that better
-    type(keys: any) {
-      fireEvent.keyUp(body, keys)
-    },
-    searchFor(characters: string) {
-      fireEvent.input(queries.getByTitle(body, 'search-input'), {target: {value: characters}});
-    },
-  }
-}
-
 function testPalette(doc: Document) {
   mountPalette(doc)
+
   return {
     body: doc.body,
-    userDo: bindUserEvents(doc.body as HTMLBodyElement)
+    palette: {
+      getSearchInput() {
+        return queries.getByTitle(doc.body, 'search-input')
+      },
+      getDropdown() {
+        return within(queries.getByTestId(doc.body, 'accessible-palette-dropdown'))
+      }
+    }
   }
 }
 
 describe('click interactive element with the keyboard', () => {
   test('shows the palette when pressing ctrl-f', () => {
-    mountPalette(document)
+    const {body} = testPalette(document)
 
-    expect(queries.getByTestId(document.body, 'accessible-palette')).not.toHaveClass('visible')
+    expect(queries.getByTestId(body, 'accessible-palette')).not.toHaveClass('visible')
 
-    fireEvent.keyUp(document.body, { key: 'f', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'f', ctrlKey: true })
 
-    expect(queries.getByTestId(document.body, 'accessible-palette')).toHaveClass('visible')
-    expect(queries.getByTitle(document.body, 'search-input')).toHaveFocus()
+    expect(queries.getByTestId(body, 'accessible-palette')).toHaveClass('visible')
+    expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
   })
 
   test('filters the document links by their href on input and show them in the dropdown', async () => {
@@ -43,17 +39,17 @@ describe('click interactive element with the keyboard', () => {
       </div>
     `
 
-    const {body} = testPalette(document)
+    const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(document.body, { key: 'f', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'f', ctrlKey: true })
 
     await wait(() =>
-      expect(queries.getByTitle(body, 'search-input')).toBeInTheDocument()
+      expect(palette.getSearchInput()).toBeInTheDocument()
     )
 
-    fireEvent.input(queries.getByTitle(body, 'search-input'), {target: {value: 'jav'}});
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}});
 
-    const dropdown = within(queries.getByTestId(body, 'accessible-palette-dropdown'))
+    const dropdown = palette.getDropdown()
 
     expect(dropdown.getByText('javascript')).toBeInTheDocument()
     expect(dropdown.getByText('java')).toBeInTheDocument()
@@ -72,27 +68,27 @@ describe('click interactive element with the keyboard', () => {
     const javaLink = document.querySelector('.java')!
     javaLink.addEventListener('click', spyClick)
 
-    const {body} = testPalette(document)
+    const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(document.body, { key: 'f', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
 
     await wait(() =>
-      expect(queries.getByTitle(body, 'search-input')).toBeInTheDocument()
+      expect(palette.getSearchInput()).toBeInTheDocument()
     )
 
-    fireEvent.input(queries.getByTitle(body, 'search-input'), {target: {value: 'jav'}});
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}});
 
-    fireEvent.keyUp(document.body, { key: 'n', ctrlKey: true })
+    const dropdown = palette.getDropdown()
 
-    const dropdown = within(queries.getByTestId(body, 'accessible-palette-dropdown'))
+    fireEvent.keyUp(body, {key: 'n', ctrlKey: true})
     expect(dropdown.getByText('javascript')).toHaveFocus()
 
-    fireEvent.keyUp(document.body, { key: 'n', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'n', ctrlKey: true})
     expect(dropdown.getByText('java')).toHaveFocus()
 
     expect(spyClick).not.toHaveBeenCalled()
 
-    fireEvent.keyUp(document.body, { key: 'Enter' })
+    fireEvent.keyUp(body, {key: 'Enter'})
 
     expect(spyClick).toHaveBeenCalled()
   })
@@ -106,38 +102,37 @@ describe('click interactive element with the keyboard', () => {
       </div>
     `
 
-    const {body, userDo} = testPalette(document)
+    const {body, palette} = testPalette(document)
 
-    userDo.type({ key: 'f', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
 
     await wait(() =>
-      expect(queries.getByTitle(body, 'search-input')).toBeInTheDocument()
+      expect(palette.getSearchInput()).toBeInTheDocument()
     )
 
-    userDo.searchFor('jav')
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}});
 
-    const dropdown = within(queries.getByTestId(body, 'accessible-palette-dropdown'))
-
+    const dropdown = palette.getDropdown()
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
 
-    userDo.type({ key: 'n', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'n', ctrlKey: true })
     expect(dropdown.getByText('javascript')).toHaveFocus()
 
-    userDo.type({ key: 'n', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'n', ctrlKey: true })
     expect(dropdown.getByText('java')).toHaveFocus()
 
     // End of the list, we stay on "java"
-    userDo.type({ key: 'n', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'n', ctrlKey: true })
     expect(dropdown.getByText('java')).toHaveFocus()
 
-    userDo.type({ key: 'p', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'p', ctrlKey: true })
     expect(dropdown.getByText('javascript')).toHaveFocus()
 
-    userDo.type({ key: 'p', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'p', ctrlKey: true })
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
 
     // Beginning of the list, stay on the input
-    userDo.type({ key: 'p', ctrlKey: true })
+    fireEvent.keyUp(body, { key: 'p', ctrlKey: true })
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
   })
 })
