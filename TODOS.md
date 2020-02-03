@@ -47,6 +47,8 @@ Scenario: When I'm highlighting an item in the dropdown, I can see where it is o
 - [ ] Show a nice description of an element (like what element it is)
 - [ ] Update README
 - [ ] Add demo video to the readme
+- [ ] Add linting
+- [ ] Add github actions for CI
 
 ## v0.X - User Focus Styles (settings)
 ## v0.Y - Inline helps in the UI
