@@ -20,6 +20,7 @@ can click on the page.
 - [X] Refactor the palette as a class
 - [ ] TDD: setup tests with jest and dom testing library
 - [ ] Write a test to open the dropdown, select the third element, then the second,  and click it
+- [ ] UX: focus an item when highlighting it, or when pressing ctrl-f again? What if it's behind the palette ui?
 - [ ] Clear items if query is empty
 - [ ] Hide the dropdown if it's empty
 - [ ] Enter opens the first link if none selected

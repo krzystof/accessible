@@ -113,11 +113,14 @@ export class Palette {
 
   private initUi() {
     this.ui.rootEl.classList.add('accessible-palette')
+    this.ui.rootEl.dataset.testid = 'accessible-palette'
+
     this.ui.wrap.classList.add('wrap')
     this.ui.dropdown.classList.add('dropdown')
     this.ui.dropdown.classList.add('display-none')
     this.ui.inputWrap.classList.add('input-wrap')
 
+    this.ui.input.title = 'search-input'
 
     this.ui.inputWrap.appendChild(this.ui.input)
     this.ui.wrap.appendChild(this.ui.inputWrap)
