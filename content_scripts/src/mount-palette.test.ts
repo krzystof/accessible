@@ -46,7 +46,41 @@ describe('click interactive element with the keyboard', () => {
     expect(dropdown.queryByText('php')).toBeNull()
   })
 
-  test.todo('highlight an item, then press enter to navigate to it')
+  test('highlight an item, then press enter to navigate to it', async () => {
+    document.body.innerHTML = `
+      <div>
+        <a href="javascript">javascript</a>
+        <a href="java">java</a>
+        <a href="php">php</a>
+      </div>
+    `
+
+    const { body } = testPalette(document)
+
+    fireEvent.keyUp(document.body, { key: 'f', ctrlKey: true })
+
+    await wait(() =>
+      expect(queries.getByTitle(body, 'search-input')).toBeInTheDocument()
+    )
+
+    fireEvent.input(queries.getByTitle(body, 'search-input'), {target: {value: 'jav'}});
+
+    fireEvent.keyUp(document.body, { key: 'n', ctrlKey: true })
+
+    const dropdown = within(queries.getByTestId(body, 'accessible-palette-dropdown'))
+    expect(dropdown.getByText('javascript')).toHaveFocus()
+
+    fireEvent.keyUp(document.body, { key: 'n', ctrlKey: true })
+    expect(dropdown.getByText('java')).toHaveFocus()
+
+    const spyClick = jest.fn()
+    dropdown.getByText('java').addEventListener('click', spyClick)
+    expect(spyClick).not.toHaveBeenCalled()
+
+    fireEvent.keyUp(document.body, { key: 'Enter' })
+
+    expect(spyClick).toHaveBeenCalled()
+  })
 
   test.todo('navigate the list up and down')
 })

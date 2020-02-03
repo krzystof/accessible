@@ -39,6 +39,7 @@ export class Palette {
   }
 
   isHidden() {
+    //use the "hidden" attribute
     return !this.ui.rootEl.classList.contains('visible')
   }
 
@@ -106,6 +107,8 @@ export class Palette {
       this.dropdownItems[0].click()
       return
     }
+
+    this.dropdownItems[this.highlightedResultIndex].click()
   }
 
   // Initial state of the palette

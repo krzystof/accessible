@@ -7,7 +7,6 @@ function mountPalette(doc: Document) {
   function getLinks() {
     // TODO Select more than just links
     const links =  doc.querySelectorAll('a')
-    console.log('>>>', 'query selector', links)
     return Promise.resolve(links.values())
   }
 
