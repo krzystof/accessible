@@ -43,9 +43,16 @@ export class Palette {
     return !this.ui.rootEl.classList.contains('visible')
   }
 
-  show() {
-    this.ui.rootEl.classList.add('visible')
-    this.ui.input.focus()
+  showOrFocus() {
+    if (this.isHidden()) {
+      this.ui.rootEl.classList.add('visible')
+      this.ui.input.focus()
+      return
+    }
+
+    if (this.highlightedResultIndex !== null) {
+      // TODO focus the related item
+    }
   }
 
   highlightPreviousResult() {

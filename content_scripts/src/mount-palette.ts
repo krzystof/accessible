@@ -25,7 +25,7 @@ function mountPalette(doc: Document) {
 
   doc.addEventListener('keyup', (event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === 'f') {
-      palette.show()
+      palette.showOrFocus()
       return
     }
 

@@ -17,7 +17,7 @@ can click on the page.
 - [X] Enter opens the selected link
 - [X] Switch to ts
 - [X] Update styles to make it a bit nicer
-- [.] Refactor the palette as a class
+- [X] Refactor the palette as a class
 - [ ] TDD: setup tests with jest and dom testing library
 - [ ] Write a test to open the dropdown, select the third element, then the second,  and click it
 - [ ] Clear items if query is empty
