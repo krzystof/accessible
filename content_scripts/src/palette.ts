@@ -35,7 +35,6 @@ export class Palette {
   // Public Palette API
 
   setLinks(links: IterableIterator<HTMLAnchorElement>) {
-    console.log('>>>', 'setting the links', links)
     this.docLinks = Array.from(links)
   }
 
@@ -118,6 +117,8 @@ export class Palette {
     this.ui.wrap.classList.add('wrap')
     this.ui.dropdown.classList.add('dropdown')
     this.ui.dropdown.classList.add('display-none')
+    this.ui.dropdown.dataset.testid = 'accessible-palette-dropdown'
+
     this.ui.inputWrap.classList.add('input-wrap')
 
     this.ui.input.title = 'search-input'
@@ -131,7 +132,6 @@ export class Palette {
   private bindEventHandlers() {
     this.ui.input.addEventListener('input', (event: Event) => {
         const eventTarget = event.target as HTMLInputElement
-        console.log('handle input on input', eventTarget.value)
 
         let filteredLinks = []
         for (let l of this.docLinks) {
