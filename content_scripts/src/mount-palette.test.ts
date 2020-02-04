@@ -8,6 +8,9 @@ function testPalette(doc: Document) {
   return {
     body: doc.body,
     palette: {
+      getRoot() {
+        return queries.getByTestId(doc.body, 'accessible-palette')
+      },
       getSearchInput() {
         return queries.getByTitle(doc.body, 'search-input')
       },
@@ -190,5 +193,31 @@ describe('click interactive element with the keyboard', () => {
     expect(spyJavascriptClick).toHaveBeenCalled()
     expect(spyJavaClick).not.toHaveBeenCalled()
     expect(spyPhpClick).not.toHaveBeenCalled()
+  })
+
+  test('type Esc or ctrl-c to close the palette', async () => {
+    document.body.innerHTML = `
+      <div>
+        <a href="#javascript">javascript</a>
+        <a href="#java">java</a>
+        <a href="#php">php</a>
+      </div>
+    `
+
+    const {body, palette} = testPalette(document)
+
+    expect(palette.getRoot()).not.toHaveClass('visible')
+
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    expect(palette.getRoot()).toHaveClass('visible')
+
+    fireEvent.keyUp(body, {key: 'Esc'})
+    expect(palette.getRoot()).not.toHaveClass('visible')
+
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    expect(palette.getRoot()).toHaveClass('visible')
+
+    fireEvent.keyUp(body, {key: 'c', ctrlKey: true})
+    expect(palette.getRoot()).not.toHaveClass('visible')
   })
 })

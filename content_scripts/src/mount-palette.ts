@@ -34,6 +34,10 @@ function mountPalette(doc: Document) {
       return
     }
 
+    if (event.key === 'Esc' || (event.ctrlKey && event.key === 'c')) {
+      palette.hide()
+    }
+
     if (event.ctrlKey && event.key === 'n') {
       palette.highlightNextResult()
     }

@@ -54,6 +54,9 @@ export class Palette {
     }
   }
 
+  hide() {
+    this.ui.rootEl.classList.remove('visible')
+  }
   highlightPreviousResult() {
     const shownItems = this.dropdownItems.length
 
