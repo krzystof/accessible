@@ -13,8 +13,8 @@ function testPalette(doc: Document) {
       },
       getDropdown() {
         return within(queries.getByTestId(doc.body, 'accessible-palette-dropdown'))
-      }
-    }
+      },
+    },
   }
 }
 
@@ -24,7 +24,7 @@ describe('click interactive element with the keyboard', () => {
 
     expect(queries.getByTestId(body, 'accessible-palette')).not.toHaveClass('visible')
 
-    fireEvent.keyUp(body, { key: 'f', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
 
     expect(queries.getByTestId(body, 'accessible-palette')).toHaveClass('visible')
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
@@ -41,13 +41,11 @@ describe('click interactive element with the keyboard', () => {
 
     const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(body, { key: 'f', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
 
-    await wait(() =>
-      expect(palette.getSearchInput()).toBeInTheDocument()
-    )
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
-    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}});
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
 
     const dropdown = palette.getDropdown()
 
@@ -72,11 +70,9 @@ describe('click interactive element with the keyboard', () => {
 
     fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
 
-    await wait(() =>
-      expect(palette.getSearchInput()).toBeInTheDocument()
-    )
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
-    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}});
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
 
     const dropdown = palette.getDropdown()
 
@@ -106,33 +102,31 @@ describe('click interactive element with the keyboard', () => {
 
     fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
 
-    await wait(() =>
-      expect(palette.getSearchInput()).toBeInTheDocument()
-    )
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
-    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}});
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
 
     const dropdown = palette.getDropdown()
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
 
-    fireEvent.keyUp(body, { key: 'n', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'n', ctrlKey: true})
     expect(dropdown.getByText('javascript')).toHaveFocus()
 
-    fireEvent.keyUp(body, { key: 'n', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'n', ctrlKey: true})
     expect(dropdown.getByText('java')).toHaveFocus()
 
     // End of the list, we stay on "java"
-    fireEvent.keyUp(body, { key: 'n', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'n', ctrlKey: true})
     expect(dropdown.getByText('java')).toHaveFocus()
 
-    fireEvent.keyUp(body, { key: 'p', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'p', ctrlKey: true})
     expect(dropdown.getByText('javascript')).toHaveFocus()
 
-    fireEvent.keyUp(body, { key: 'p', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'p', ctrlKey: true})
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
 
     // Beginning of the list, stay on the input
-    fireEvent.keyUp(body, { key: 'p', ctrlKey: true })
+    fireEvent.keyUp(body, {key: 'p', ctrlKey: true})
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
   })
 })

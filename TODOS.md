@@ -19,6 +19,7 @@ can click on the page.
 - [X] Refactor the palette as a class
 - [X] TDD: setup tests with jest and dom testing library
 - [X] Write a test to open the dropdown, select the third element, then the second,  and click it
+- [ ] Setup CI
 - [ ] Clear items if query is empty
 - [ ] Hide the dropdown if it's empty
 - [ ] Enter opens the first link if none selected

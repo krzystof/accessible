@@ -28,8 +28,7 @@ export class Palette {
     this.initUi()
     this.bindEventHandlers()
 
-    this.handlers.getLinks()
-      .then(links => this.setLinks(links))
+    this.handlers.getLinks().then(links => this.setLinks(links))
   }
 
   // Public Palette API
@@ -134,20 +133,20 @@ export class Palette {
 
   private bindEventHandlers() {
     this.ui.input.addEventListener('input', (event: Event) => {
-        const eventTarget = event.target as HTMLInputElement
+      const eventTarget = event.target as HTMLInputElement
 
-        let filteredLinks = []
-        for (let l of this.docLinks) {
-          // TODO make it case insensitive
-          if (l.textContent && l.textContent.includes(eventTarget.value)) {
-            filteredLinks.push(l)
-          }
+      let filteredLinks = []
+      for (let l of this.docLinks) {
+        // TODO make it case insensitive
+        if (l.textContent && l.textContent.includes(eventTarget.value)) {
+          filteredLinks.push(l)
         }
+      }
 
-        const items = filteredLinks.slice(0, MAX_DROPDOWN_ITEMS)
+      const items = filteredLinks.slice(0, MAX_DROPDOWN_ITEMS)
 
-        // TODO reconcile the ui instead
-        this.showDropdown(items)
+      // TODO reconcile the ui instead
+      this.showDropdown(items)
     })
     // TODO onblur closes the palette
   }
@@ -155,25 +154,25 @@ export class Palette {
   // Private Palette API
 
   private showDropdown(links: HTMLAnchorElement[]) {
-      this.ui.dropdown.innerHTML = ''
+    this.ui.dropdown.innerHTML = ''
 
-      // TODO don't throw away items here
-      this.dropdownItems = []
+    // TODO don't throw away items here
+    this.dropdownItems = []
 
-      links.forEach((link, index) => {
-        const node = document.createElement('button')
-        const itemClass = `dropdown-result-num-${index}`
-        node.classList.add('dropdown-result')
-        node.classList.add(itemClass)
-        node.addEventListener('click', () => {
-          link.click()
-        })
-        let t = link.textContent
-        node.textContent = t || 'no content for this link'
-
-        // TODO this is duplicated, should happen when reconciling DOM
-        this.dropdownItems.push(node)
-        this.ui.dropdown.appendChild(node)
+    links.forEach((link, index) => {
+      const node = document.createElement('button')
+      const itemClass = `dropdown-result-num-${index}`
+      node.classList.add('dropdown-result')
+      node.classList.add(itemClass)
+      node.addEventListener('click', () => {
+        link.click()
       })
+      let t = link.textContent
+      node.textContent = t || 'no content for this link'
+
+      // TODO this is duplicated, should happen when reconciling DOM
+      this.dropdownItems.push(node)
+      this.ui.dropdown.appendChild(node)
+    })
   }
 }
