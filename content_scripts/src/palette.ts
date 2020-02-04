@@ -135,6 +135,11 @@ export class Palette {
     this.ui.input.addEventListener('input', (event: Event) => {
       const eventTarget = event.target as HTMLInputElement
 
+      if (eventTarget.value === '') {
+        this.hideDropdown()
+        return
+      }
+
       let filteredLinks = []
       for (let l of this.docLinks) {
         // TODO make it case insensitive
@@ -174,5 +179,10 @@ export class Palette {
       this.dropdownItems.push(node)
       this.ui.dropdown.appendChild(node)
     })
+  }
+
+  private hideDropdown() {
+    this.ui.dropdown.innerHTML = ''
+    this.dropdownItems = []
   }
 }

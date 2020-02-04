@@ -129,4 +129,29 @@ describe('click interactive element with the keyboard', () => {
     fireEvent.keyUp(body, {key: 'p', ctrlKey: true})
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
   })
+
+  test('clears the dropdown if the search query is empty', async () => {
+    document.body.innerHTML = `
+      <div>
+        <a href="#javascript">javascript</a>
+        <a href="#java">java</a>
+        <a href="#php">php</a>
+      </div>
+    `
+
+    const {body, palette} = testPalette(document)
+
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
+
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'php'}})
+
+    const dropdown = palette.getDropdown()
+    expect(dropdown.queryByText('php')).toHaveTextContent('php')
+
+    fireEvent.input(palette.getSearchInput(), {target: {value: ''}})
+
+    expect(dropdown.queryByText('php')).toBeNull()
+  })
 })
