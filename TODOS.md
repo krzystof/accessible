@@ -21,7 +21,7 @@ can click on the page.
 - [X] Write a test to open the dropdown, select the third element, then the second,  and click it
 - [X] Setup CI
 - [X] Clear items if query is empty
-- [ ] Hide the dropdown if it's empty
+- [X] Hide the dropdown if it's empty
 - [ ] Enter opens the first link if none selected
 - [ ] Press `ctrl-f` to center the page on the highlighted item, and focus it
 - [ ] Close the palette on `esc` or `ctrl-c`

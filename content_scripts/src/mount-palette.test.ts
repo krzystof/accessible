@@ -149,9 +149,11 @@ describe('click interactive element with the keyboard', () => {
 
     const dropdown = palette.getDropdown()
     expect(dropdown.queryByText('php')).toHaveTextContent('php')
+    expect(queries.getByTestId(body, 'accessible-palette-dropdown')).toBeVisible()
 
     fireEvent.input(palette.getSearchInput(), {target: {value: ''}})
 
     expect(dropdown.queryByText('php')).toBeNull()
+    expect(queries.getByTestId(body, 'accessible-palette-dropdown')).not.toBeVisible()
   })
 })

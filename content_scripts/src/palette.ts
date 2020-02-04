@@ -163,6 +163,7 @@ export class Palette {
 
     // TODO don't throw away items here
     this.dropdownItems = []
+    this.ui.dropdown.hidden = false
 
     links.forEach((link, index) => {
       const node = document.createElement('button')
@@ -183,6 +184,7 @@ export class Palette {
 
   private hideDropdown() {
     this.ui.dropdown.innerHTML = ''
+    this.ui.dropdown.hidden = true
     this.dropdownItems = []
   }
 }
