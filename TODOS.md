@@ -22,8 +22,7 @@ can click on the page.
 - [X] Setup CI
 - [X] Clear items if query is empty
 - [X] Hide the dropdown if it's empty
-- [ ] Enter opens the first link if none selected
-- [ ] Press `ctrl-f` to center the page on the highlighted item, and focus it
+- [X] Enter opens the first link if none selected
 - [ ] Close the palette on `esc` or `ctrl-c`
 - [ ] Return the focus to the body element that had the focus when closing the list
 - [ ] Prevent clashes with sites shortcuts
@@ -36,6 +35,7 @@ can click on the page.
 
 Scenario: When I'm highlighting an item in the dropdown, I can see where it is on the page.
 
+- [ ] Press `ctrl-f` to center the page on the highlighted item, and focus it
 - [ ] UX: focus an item when highlighting it, or when pressing ctrl-f again? What if it's behind the palette ui?
 
 ----

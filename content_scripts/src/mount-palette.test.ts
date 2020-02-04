@@ -1,4 +1,4 @@
-import {queries, wait, within, fireEvent} from '@testing-library/dom'
+import {screen, queries, wait, within, fireEvent} from '@testing-library/dom'
 import {mountPalette} from './mount-palette'
 import '@testing-library/jest-dom'
 
@@ -155,5 +155,40 @@ describe('click interactive element with the keyboard', () => {
 
     expect(dropdown.queryByText('php')).toBeNull()
     expect(queries.getByTestId(body, 'accessible-palette-dropdown')).not.toBeVisible()
+  })
+
+  test('click on the first item of the dropdown when pressing enter and focus is on the input', async () => {
+    const spyJavascriptClick = jest.fn()
+    const spyJavaClick = jest.fn()
+    const spyPhpClick = jest.fn()
+    document.body.innerHTML = `
+      <div>
+        <a href="#javascript">javascript</a>
+        <a href="#java">java</a>
+        <a href="#php">php</a>
+      </div>
+    `
+    document.querySelector('[href="#javascript"]')!.addEventListener('click', spyJavascriptClick)
+    document.querySelector('[href="#java"]')!.addEventListener('click', spyJavaClick)
+    document.querySelector('[href="#php"]')!.addEventListener('click', spyPhpClick)
+
+    const {body, palette} = testPalette(document)
+
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
+
+    fireEvent.keyUp(body, {key: 'Enter'})
+
+    expect(spyJavascriptClick).not.toHaveBeenCalled()
+    expect(spyJavaClick).not.toHaveBeenCalled()
+    expect(spyPhpClick).not.toHaveBeenCalled()
+
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
+    fireEvent.keyUp(body, {key: 'Enter'})
+
+    expect(spyJavascriptClick).toHaveBeenCalled()
+    expect(spyJavaClick).not.toHaveBeenCalled()
+    expect(spyPhpClick).not.toHaveBeenCalled()
   })
 })

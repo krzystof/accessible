@@ -151,7 +151,11 @@ export class Palette {
       const items = filteredLinks.slice(0, MAX_DROPDOWN_ITEMS)
 
       // TODO reconcile the ui instead
-      this.showDropdown(items)
+      if (items.length === 0) {
+        this.hideDropdown()
+      } else {
+        this.showDropdown(items)
+      }
     })
     // TODO onblur closes the palette
   }
