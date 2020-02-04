@@ -24,7 +24,7 @@ can click on the page.
 - [X] Hide the dropdown if it's empty
 - [X] Enter opens the first link if none selected
 - [X] Close the palette on `esc` or `ctrl-c`
-- [ ] Hide the palette on blur
+- [X] Hide the palette on blur
 - [ ] Return the focus to the body element that had the focus when closing the list
 - [ ] Prevent clashes with sites shortcuts
 - [ ] Remove debug css styles

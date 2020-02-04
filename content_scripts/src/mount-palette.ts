@@ -34,7 +34,7 @@ function mountPalette(doc: Document) {
       return
     }
 
-    if (event.key === 'Esc' || (event.ctrlKey && event.key === 'c')) {
+    if (event.key === 'Escape' || (event.ctrlKey && event.key === 'c')) {
       palette.hide()
     }
 

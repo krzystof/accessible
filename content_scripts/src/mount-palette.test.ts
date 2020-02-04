@@ -21,8 +21,8 @@ function testPalette(doc: Document) {
   }
 }
 
-describe('click interactive element with the keyboard', () => {
-  test('shows the palette when pressing ctrl-f', () => {
+describe('Click interactive element with the keyboard', () => {
+  test('Shows the palette when pressing ctrl-f', () => {
     const {body} = testPalette(document)
 
     expect(queries.getByTestId(body, 'accessible-palette')).not.toHaveClass('visible')
@@ -33,7 +33,7 @@ describe('click interactive element with the keyboard', () => {
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
   })
 
-  test('filters the document links by their href on input and show them in the dropdown', async () => {
+  test('Filters the document links by their href on input and show them in the dropdown', async () => {
     document.body.innerHTML = `
       <div>
         <a href="#javascript">javascript</a>
@@ -57,7 +57,7 @@ describe('click interactive element with the keyboard', () => {
     expect(dropdown.queryByText('php')).toBeNull()
   })
 
-  test('highlight an item, then press enter to navigate to it', async () => {
+  test('Highlight an item, then press enter to navigate to it', async () => {
     const spyClick = jest.fn()
     document.body.innerHTML = `
       <div>
@@ -92,7 +92,7 @@ describe('click interactive element with the keyboard', () => {
     expect(spyClick).toHaveBeenCalled()
   })
 
-  test('navigate the list up and down', async () => {
+  test('Navigate the list up and down', async () => {
     document.body.innerHTML = `
       <div>
         <a href="#javascript">javascript</a>
@@ -133,7 +133,7 @@ describe('click interactive element with the keyboard', () => {
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
   })
 
-  test('clears the dropdown if the search query is empty', async () => {
+  test('Clears the dropdown if the search query is empty', async () => {
     document.body.innerHTML = `
       <div>
         <a href="#javascript">javascript</a>
@@ -148,6 +148,8 @@ describe('click interactive element with the keyboard', () => {
 
     await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
+    expect(queries.getByTestId(body, 'accessible-palette-dropdown')).not.toBeVisible()
+
     fireEvent.input(palette.getSearchInput(), {target: {value: 'php'}})
 
     const dropdown = palette.getDropdown()
@@ -160,7 +162,7 @@ describe('click interactive element with the keyboard', () => {
     expect(queries.getByTestId(body, 'accessible-palette-dropdown')).not.toBeVisible()
   })
 
-  test('click on the first item of the dropdown when pressing enter and focus is on the input', async () => {
+  test('Click on the first item of the dropdown when pressing enter and focus is on the input', async () => {
     const spyJavascriptClick = jest.fn()
     const spyJavaClick = jest.fn()
     const spyPhpClick = jest.fn()
@@ -195,7 +197,7 @@ describe('click interactive element with the keyboard', () => {
     expect(spyPhpClick).not.toHaveBeenCalled()
   })
 
-  test('type Esc or ctrl-c to close the palette', async () => {
+  test('Type Esc or ctrl-c to close the palette', async () => {
     document.body.innerHTML = `
       <div>
         <a href="#javascript">javascript</a>
@@ -211,13 +213,36 @@ describe('click interactive element with the keyboard', () => {
     fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
     expect(palette.getRoot()).toHaveClass('visible')
 
-    fireEvent.keyUp(body, {key: 'Esc'})
+    fireEvent.keyUp(body, {key: 'Escape'})
     expect(palette.getRoot()).not.toHaveClass('visible')
 
     fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
     expect(palette.getRoot()).toHaveClass('visible')
 
     fireEvent.keyUp(body, {key: 'c', ctrlKey: true})
+    expect(palette.getRoot()).not.toHaveClass('visible')
+  })
+
+  test('Closes the palette when clicking outside', () => {
+    document.body.innerHTML = `
+      <div>
+        <a href="#javascript">javascript</a>
+        <a href="#java">java</a>
+        <a href="#php">php</a>
+      </div>
+    `
+
+    const {body, palette} = testPalette(document)
+
+    expect(palette.getRoot()).not.toHaveClass('visible')
+
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    expect(palette.getRoot()).toHaveClass('visible')
+
+    fireEvent.click(palette.getSearchInput())
+    expect(palette.getRoot()).toHaveClass('visible')
+
+    fireEvent.click(palette.getRoot())
     expect(palette.getRoot()).not.toHaveClass('visible')
   })
 })

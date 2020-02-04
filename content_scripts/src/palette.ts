@@ -37,9 +37,13 @@ export class Palette {
     this.docLinks = Array.from(links)
   }
 
+  isVisible() {
+    // TODO use the "hidden" attribute
+    return this.ui.rootEl.classList.contains('visible')
+  }
+
   isHidden() {
-    //use the "hidden" attribute
-    return !this.ui.rootEl.classList.contains('visible')
+    return !this.isVisible()
   }
 
   showOrFocus() {
@@ -121,7 +125,7 @@ export class Palette {
 
     this.ui.wrap.classList.add('wrap')
     this.ui.dropdown.classList.add('dropdown')
-    this.ui.dropdown.classList.add('display-none')
+    this.ui.dropdown.hidden = true
     this.ui.dropdown.dataset.testid = 'accessible-palette-dropdown'
 
     this.ui.inputWrap.classList.add('input-wrap')
@@ -160,7 +164,13 @@ export class Palette {
         this.showDropdown(items)
       }
     })
-    // TODO onblur closes the palette
+
+    this.ui.rootEl.addEventListener('click', (event: Event) => {
+      const eventTarget = event.target as HTMLElement
+      if (eventTarget && !this.ui.wrap.contains(eventTarget)) {
+        this.hide()
+      }
+    })
   }
 
   // Private Palette API
