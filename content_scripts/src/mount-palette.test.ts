@@ -27,7 +27,7 @@ describe('Click interactive element with the keyboard', () => {
 
     expect(queries.getByTestId(body, 'accessible-palette')).not.toHaveClass('visible')
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
 
     expect(queries.getByTestId(body, 'accessible-palette')).toHaveClass('visible')
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
@@ -44,7 +44,7 @@ describe('Click interactive element with the keyboard', () => {
 
     const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
 
     await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
@@ -71,7 +71,7 @@ describe('Click interactive element with the keyboard', () => {
 
     const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
 
     await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
@@ -103,7 +103,7 @@ describe('Click interactive element with the keyboard', () => {
 
     const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
 
     await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
@@ -144,7 +144,7 @@ describe('Click interactive element with the keyboard', () => {
 
     const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
 
     await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
@@ -179,7 +179,7 @@ describe('Click interactive element with the keyboard', () => {
 
     const {body, palette} = testPalette(document)
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
 
     await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
 
@@ -210,13 +210,13 @@ describe('Click interactive element with the keyboard', () => {
 
     expect(palette.getRoot()).not.toHaveClass('visible')
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     expect(palette.getRoot()).toHaveClass('visible')
 
     fireEvent.keyUp(body, {key: 'Escape'})
     expect(palette.getRoot()).not.toHaveClass('visible')
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     expect(palette.getRoot()).toHaveClass('visible')
 
     fireEvent.keyUp(body, {key: 'c', ctrlKey: true})
@@ -236,7 +236,7 @@ describe('Click interactive element with the keyboard', () => {
 
     expect(palette.getRoot()).not.toHaveClass('visible')
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     expect(palette.getRoot()).toHaveClass('visible')
 
     fireEvent.click(palette.getSearchInput())
@@ -262,7 +262,7 @@ describe('Click interactive element with the keyboard', () => {
 
     expect(queries.getByText(body, 'java')).toHaveFocus()
 
-    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     expect(queries.getByText(body, 'java')).not.toHaveFocus()
     expect(palette.getSearchInput()).toHaveFocus()
 

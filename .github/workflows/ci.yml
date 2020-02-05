@@ -20,5 +20,8 @@ jobs:
       - name: Check format
         run: yarn prettier
 
+      - name: Check types
+        run: yarn tsc --noEmit
+
       - name: Run tests
         run: yarn test

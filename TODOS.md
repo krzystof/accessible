@@ -26,7 +26,7 @@ can click on the page.
 - [X] Close the palette on `esc` or `ctrl-c`
 - [X] Hide the palette on blur
 - [X] Return the focus to the body element that had the focus when closing the list
-- [ ] Change from `ctrl-f` to `ctrl-e`
+- [X] Change from `ctrl-f` to `ctrl-e`
 - [ ] Prevent clashes with sites shortcuts
 - [ ] Remove debug css styles
 - [ ] Extract the UI to a separate class

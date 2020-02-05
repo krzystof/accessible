@@ -1,5 +1,11 @@
 const MAX_DROPDOWN_ITEMS = 5
 
+type FocusableElement = Element & {focus: () => void}
+
+function isFocusable(element: null | Element): element is FocusableElement {
+  return element ? 'focus' in element : false
+}
+
 type PaletteDOMElements = {
   rootEl: HTMLDivElement
   wrap: HTMLDivElement
@@ -15,7 +21,7 @@ type PaletteCallbacks = {
 export class Palette {
   ui: PaletteDOMElements // TODO extract to a separate class that handles DOM updates
   handlers: PaletteCallbacks
-  pageFocusedElement?: HTMLElement
+  pageFocusedElement: null | Element = null
 
   docLinks: HTMLAnchorElement[] = []
   dropdownItems: HTMLButtonElement[] = []
@@ -47,7 +53,7 @@ export class Palette {
     return !this.isVisible()
   }
 
-  showOrFocus(focusedElement?: HTMLElement) {
+  showOrFocus(focusedElement: null | Element) {
     this.pageFocusedElement = focusedElement
 
     if (this.isHidden()) {
@@ -60,7 +66,7 @@ export class Palette {
   hide() {
     this.ui.rootEl.classList.remove('visible')
 
-    if (this.pageFocusedElement) {
+    if (isFocusable(this.pageFocusedElement)) {
       this.pageFocusedElement.focus()
     }
   }
