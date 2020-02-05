@@ -25,18 +25,20 @@ can click on the page.
 - [X] Enter opens the first link if none selected
 - [X] Close the palette on `esc` or `ctrl-c`
 - [X] Hide the palette on blur
-- [ ] Return the focus to the body element that had the focus when closing the list
+- [X] Return the focus to the body element that had the focus when closing the list
+- [ ] Change from `ctrl-f` to `ctrl-e`
 - [ ] Prevent clashes with sites shortcuts
 - [ ] Remove debug css styles
+- [ ] Extract the UI to a separate class
 - [ ] Package and install on my instance of Firefox
 
 ----
 
-## v0.2 - Focus Elements (ctrl-f)
+## v0.2 - Focus Elements (ctrl-e)
 
 Scenario: When I'm highlighting an item in the dropdown, I can see where it is on the page.
 
-- [ ] Press `ctrl-f` to center the page on the highlighted item, and focus it
+- [ ] Press `ctrl-e` to center the page on the highlighted item, and focus it
 - [ ] UX: focus an item when highlighting it, or when pressing ctrl-f again? What if it's behind the palette ui?
 
 ----

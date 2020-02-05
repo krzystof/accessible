@@ -13,8 +13,9 @@ type PaletteCallbacks = {
 }
 
 export class Palette {
-  ui: PaletteDOMElements
+  ui: PaletteDOMElements // TODO extract to a separate class that handles DOM updates
   handlers: PaletteCallbacks
+  pageFocusedElement?: HTMLElement
 
   docLinks: HTMLAnchorElement[] = []
   dropdownItems: HTMLButtonElement[] = []
@@ -46,21 +47,24 @@ export class Palette {
     return !this.isVisible()
   }
 
-  showOrFocus() {
+  showOrFocus(focusedElement?: HTMLElement) {
+    this.pageFocusedElement = focusedElement
+
     if (this.isHidden()) {
       this.ui.rootEl.classList.add('visible')
       this.ui.input.focus()
       return
     }
-
-    if (this.highlightedResultIndex !== null) {
-      // TODO focus the related item
-    }
   }
 
   hide() {
     this.ui.rootEl.classList.remove('visible')
+
+    if (this.pageFocusedElement) {
+      this.pageFocusedElement.focus()
+    }
   }
+
   highlightPreviousResult() {
     const shownItems = this.dropdownItems.length
 

@@ -245,4 +245,29 @@ describe('Click interactive element with the keyboard', () => {
     fireEvent.click(palette.getRoot())
     expect(palette.getRoot()).not.toHaveClass('visible')
   })
+
+  test('Returns the focus to the element that had it before opening the palette', () => {
+    document.body.innerHTML = `
+      <div>
+        <a href="#javascript">javascript</a>
+        <a href="#java">java</a>
+        <a href="#php">php</a>
+      </div>
+    `
+
+    const {body, palette} = testPalette(document)
+
+    const javaLink = body.querySelector('[href="#java"]') as HTMLAnchorElement
+    javaLink.focus()
+
+    expect(queries.getByText(body, 'java')).toHaveFocus()
+
+    fireEvent.keyUp(body, {key: 'f', ctrlKey: true})
+    expect(queries.getByText(body, 'java')).not.toHaveFocus()
+    expect(palette.getSearchInput()).toHaveFocus()
+
+    fireEvent.keyUp(body, {key: 'Escape'})
+    expect(queries.getByText(body, 'java')).toHaveFocus()
+    expect(palette.getSearchInput()).not.toHaveFocus()
+  })
 })
