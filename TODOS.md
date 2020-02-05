@@ -1,58 +1,27 @@
 # WIP
 
-## v0.1 - Click Elements
-
-Keys: ctrl-f, ctrl-n, ctrl-p, enter
-Scenario: When I press `ctrl-f`, a popup shows in the center of the screen.
-When I type, it shows a dropdown which contains the links / buttons I
-can click on the page.
-
-- [X] Create basic input box, show it when pressing `,`
-- [X] Box styles
-- [X] Close on blur
-- [X] Index the interactive elements
-- [X] If content is not empty, show a dropdown with the matching links
-- [X] Ctrl-n and ctrl-p navigates the list
-- [X] Enter opens the selected link
-- [X] Switch to ts
-- [X] Update styles to make it a bit nicer
-- [X] Refactor the palette as a class
-- [X] TDD: setup tests with jest and dom testing library
-- [X] Write a test to open the dropdown, select the third element, then the second,  and click it
-- [X] Setup CI
-- [X] Clear items if query is empty
-- [X] Hide the dropdown if it's empty
-- [X] Enter opens the first link if none selected
-- [X] Close the palette on `esc` or `ctrl-c`
-- [X] Hide the palette on blur
-- [X] Return the focus to the body element that had the focus when closing the list
-- [X] Change from `ctrl-f` to `ctrl-e`
-- [ ] Prevent clashes with sites shortcuts
-- [ ] Remove debug css styles
-- [ ] Extract the UI to a separate class
-- [ ] Package and install on my instance of Firefox
-
-----
-
 ## v0.2 - Focus Elements (ctrl-e)
 
 Scenario: When I'm highlighting an item in the dropdown, I can see where it is on the page.
 
 - [ ] Press `ctrl-e` to center the page on the highlighted item, and focus it
 - [ ] UX: focus an item when highlighting it, or when pressing ctrl-f again? What if it's behind the palette ui?
+- [ ] Prevent clashes with sites shortcuts
 
 ----
 
 ## v0.3 - Clean up all the things
 
+- [ ] Extract the UI to a separate class
+- [ ] Attach keyboard event listeners to the palette rather than the body
 - [ ] Focus more than just links
 - [ ] Scope CSS!
 - [ ] Update filter to show interactive element
 - [ ] Show a nice description of an element (like what element it is)
-- [ ] Update README
 - [ ] Add demo video to the readme
 - [ ] Add linting
-- [ ] Add github actions for CI
+- [ ] Package and install on my instance of Firefox
+- [ ] Update README
 
 ## v0.X - User Focus Styles (settings)
 ## v0.Y - Inline helps in the UI
@@ -61,6 +30,7 @@ Scenario: When I'm highlighting an item in the dropdown, I can see where it is o
 ----
 # Open ideas
 
+* Updated highlighted items when pressing `tab` and `shift-tab`
 * Highlight the selected node when browsing the list
 * Use postcss
 * navigate focus with arrows or hjkl
