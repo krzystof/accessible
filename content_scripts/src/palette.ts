@@ -181,6 +181,8 @@ export class Palette {
         this.ui.input.value = ''
         this.hideDropdown()
         event.stopPropagation()
+        event.preventDefault()
+        return
       }
     })
 
@@ -188,6 +190,32 @@ export class Palette {
       const eventTarget = event.target as HTMLElement
       if (eventTarget && !this.ui.wrap.contains(eventTarget)) {
         this.hide()
+      }
+    })
+
+    this.ui.rootEl.addEventListener('keyup', (event: KeyboardEvent) => {
+      if (event.key === 'Escape' || (event.ctrlKey && event.key === 'c')) {
+        this.hide()
+        event.stopPropagation()
+        return
+      }
+
+      if (event.ctrlKey && event.key === 'n') {
+        this.highlightNextResult()
+        event.stopPropagation()
+        return
+      }
+
+      if (event.ctrlKey && event.key === 'p') {
+        this.highlightPreviousResult()
+        event.stopPropagation()
+        return
+      }
+
+      if (event.key === 'Enter') {
+        this.validateSelection()
+        event.stopPropagation()
+        return
       }
     })
   }

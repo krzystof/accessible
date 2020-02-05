@@ -2,8 +2,7 @@
 
 - [X] Press `ctrl-e` to center the page on the highlighted item, close the palette and focus the item
 - [X] Press `ctrl-e` on the search input to clear it
-- [ ] Extract the UI to a separate class
-- [ ] Attach keyboard event listeners to the palette rather than the body
+- [.] Attach keyboard event listeners to the palette rather than the body
 - [ ] Focus more than just links
 - [ ] Scope CSS!
 - [ ] Update filter to show interactive element
@@ -20,13 +19,19 @@
 
 ----
 
-# Bugs
+# Ideas
+
+## Bugs
 
 * Prevent clashes with sites shortcuts
 * Updated highlighted items when pressing `tab` and `shift-tab`
 
-----
-# Open ideas
+## Refactor
+
+* Extract the UI to a separate class (this will separate state/dom, breaking things in smaller pieces. is it worth it?)
+
+## Features
+
 * Highlight the selected node when browsing the list
 * Use postcss
 * navigate focus with arrows or hjkl

@@ -24,36 +24,17 @@ function mountPalette(doc: Document) {
 
   doc.body.appendChild(palette.ui.rootEl)
 
-  doc.addEventListener('keyup', (event: KeyboardEvent) => {
+  function showOrFocus(event: KeyboardEvent) {
     if (event.ctrlKey && event.key === 'e') {
-      palette.showOrFocus(doc.activeElement)
+      const activeElement = doc.activeElement
+      palette.showOrFocus(activeElement)
       return
     }
+  }
 
-    if (palette.isHidden()) {
-      return
-    }
+  doc.removeEventListener('keyup', showOrFocus)
 
-    // TODO that belongs in the palette event listeners
-    if (event.key === 'Escape' || (event.ctrlKey && event.key === 'c')) {
-      palette.hide()
-    }
-
-    // TODO that belongs in the palette event listeners
-    if (event.ctrlKey && event.key === 'n') {
-      palette.highlightNextResult()
-    }
-
-    // TODO that belongs in the palette event listeners
-    if (event.ctrlKey && event.key === 'p') {
-      palette.highlightPreviousResult()
-    }
-
-    // TODO that belongs in the palette event listeners
-    if (event.key === 'Enter') {
-      palette.validateSelection()
-    }
-  })
+  doc.addEventListener('keyup', showOrFocus)
 
   return palette
 }
