@@ -270,4 +270,51 @@ describe('Click interactive element with the keyboard', () => {
     expect(queries.getByText(body, 'java')).toHaveFocus()
     expect(palette.getSearchInput()).not.toHaveFocus()
   })
+
+  test('Focus an element on the page via the palette', async () => {
+    document.body.innerHTML = `
+      <div>
+        <a href="#javascript" data-testid="javascript-link">javascript</a>
+        <a href="#java">java</a>
+        <a href="#php">php</a>
+      </div>
+    `
+
+    const {body, palette} = testPalette(document)
+
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
+
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
+    fireEvent.keyUp(body, {key: 'n', ctrlKey: true})
+
+    expect(palette.getDropdown().getByText('javascript')).toHaveFocus()
+
+    fireEvent.keyUp(palette.getDropdown().getByText('javascript'), {key: 'e', ctrlKey: true})
+    expect(palette.getDropdown().getByText('javascript')).not.toHaveFocus()
+    expect(palette.getRoot()).not.toHaveClass('visible')
+    expect(queries.getByTestId(body, 'javascript-link')).toHaveFocus()
+  })
+
+  test('Press ctrl-e when the search input is focused to clear it', async () => {
+    document.body.innerHTML = `
+      <div>
+        <a href="#javascript">javascript</a>
+        <a href="#java">java</a>
+        <a href="#php">php</a>
+      </div>
+    `
+
+    const {body, palette} = testPalette(document)
+
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
+
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
+
+    expect(palette.getSearchInput()).toHaveValue('jav')
+
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'e', ctrlKey: true})
+    expect(palette.getSearchInput()).toHaveValue('')
+  })
 })

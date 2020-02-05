@@ -34,18 +34,22 @@ function mountPalette(doc: Document) {
       return
     }
 
+    // TODO that belongs in the palette event listeners
     if (event.key === 'Escape' || (event.ctrlKey && event.key === 'c')) {
       palette.hide()
     }
 
+    // TODO that belongs in the palette event listeners
     if (event.ctrlKey && event.key === 'n') {
       palette.highlightNextResult()
     }
 
+    // TODO that belongs in the palette event listeners
     if (event.ctrlKey && event.key === 'p') {
       palette.highlightPreviousResult()
     }
 
+    // TODO that belongs in the palette event listeners
     if (event.key === 'Enter') {
       palette.validateSelection()
     }

@@ -1,17 +1,7 @@
-# WIP
+# WIP - Unreleased
 
-## v0.2 - Focus Elements (ctrl-e)
-
-Scenario: When I'm highlighting an item in the dropdown, I can see where it is on the page.
-
-- [ ] Press `ctrl-e` to center the page on the highlighted item, and focus it
-- [ ] UX: focus an item when highlighting it, or when pressing ctrl-f again? What if it's behind the palette ui?
-- [ ] Prevent clashes with sites shortcuts
-
-----
-
-## v0.3 - Clean up all the things
-
+- [X] Press `ctrl-e` to center the page on the highlighted item, close the palette and focus the item
+- [X] Press `ctrl-e` on the search input to clear it
 - [ ] Extract the UI to a separate class
 - [ ] Attach keyboard event listeners to the palette rather than the body
 - [ ] Focus more than just links
@@ -21,6 +11,7 @@ Scenario: When I'm highlighting an item in the dropdown, I can see where it is o
 - [ ] Add demo video to the readme
 - [ ] Add linting
 - [ ] Package and install on my instance of Firefox
+- [ ] Update logo :)
 - [ ] Update README
 
 ## v0.X - User Focus Styles (settings)
@@ -28,9 +19,14 @@ Scenario: When I'm highlighting an item in the dropdown, I can see where it is o
 ## v1.0 - ?
 
 ----
-# Open ideas
 
+# Bugs
+
+* Prevent clashes with sites shortcuts
 * Updated highlighted items when pressing `tab` and `shift-tab`
+
+----
+# Open ideas
 * Highlight the selected node when browsing the list
 * Use postcss
 * navigate focus with arrows or hjkl

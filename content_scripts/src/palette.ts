@@ -58,6 +58,7 @@ export class Palette {
 
     if (this.isHidden()) {
       this.ui.rootEl.classList.add('visible')
+      this.highlightedResultIndex = null
       this.ui.input.focus()
       return
     }
@@ -175,6 +176,14 @@ export class Palette {
       }
     })
 
+    this.ui.input.addEventListener('keyup', (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === 'e') {
+        this.ui.input.value = ''
+        this.hideDropdown()
+        event.stopPropagation()
+      }
+    })
+
     this.ui.rootEl.addEventListener('click', (event: Event) => {
       const eventTarget = event.target as HTMLElement
       if (eventTarget && !this.ui.wrap.contains(eventTarget)) {
@@ -199,6 +208,14 @@ export class Palette {
       node.classList.add(itemClass)
       node.addEventListener('click', () => {
         link.click()
+      })
+      node.addEventListener('keyup', (event: KeyboardEvent) => {
+        if (event.ctrlKey && event.key === 'e') {
+          event.stopPropagation()
+          this.pageFocusedElement = null
+          this.hide()
+          link.focus()
+        }
       })
       let t = link.textContent
       node.textContent = t || 'no content for this link'
