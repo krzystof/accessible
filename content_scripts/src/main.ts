@@ -9,13 +9,6 @@ import {mountPalette} from './mount-palette'
 
   console.log('The extension is running')
 
-  // TODO example
-  // browser.runtime.onMessage.addListener((message) => {
-  //   if (message.command === 'try') {
-  //     console.log('try message >>>', message)
-  //   }
-  // })
-
   try {
     mountPalette(document)
   } catch (error) {

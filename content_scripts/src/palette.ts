@@ -136,8 +136,8 @@ export class Palette {
   // Public Palette API
 
   showOrFocus(focusedElement: null | Element) {
+    this.pageFocusedElement = focusedElement
     if (this.isHidden()) {
-      this.pageFocusedElement = focusedElement
       this.ui.rootEl.classList.add(css['visible'])
       this.highlightedResultIndex = null
       this.ui.input.focus()
