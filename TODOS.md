@@ -3,13 +3,15 @@
 - [X] Press `ctrl-e` to center the page on the highlighted item, close the palette and focus the item
 - [X] Press `ctrl-e` on the search input to clear it
 - [X] Attach keyboard event listeners to the palette rather than the body
-- [ ] Scope CSS!
-- [ ] Show a nice description of an element (like what element it is)
-- [ ] Focus more than just links
+- [X] Scope CSS using CSS modules
+- [X] Show a nice description of an element (like what element it is)
+- [ ] Focus more than just links (button)
 - [ ] Add demo video to the readme
 - [ ] Package and install on my instance of Firefox
 - [ ] Update logo
 - [ ] Update README
+- [ ] Focus all interactive elements
+- [ ] Update the list of interactive elements when the DOM changes
 
 ## v0.X - User Focus Styles (settings)
 ## v0.Y - Inline helps in the UI

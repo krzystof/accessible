@@ -93,10 +93,10 @@ describe('Click interactive element with the keyboard', () => {
     const dropdown = palette.getDropdown()
 
     fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
-    expect(dropdown.getByText('javascript')).toHaveFocus()
+    expect(dropdown.getByTitle('Reference to link with content javascript')).toHaveFocus()
 
     fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
-    expect(dropdown.getByText('java')).toHaveFocus()
+    expect(dropdown.getByTitle('Reference to link with content java')).toHaveFocus()
 
     expect(spyClick).not.toHaveBeenCalled()
 
@@ -126,17 +126,17 @@ describe('Click interactive element with the keyboard', () => {
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
 
     fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
-    expect(dropdown.getByText('javascript')).toHaveFocus()
+    expect(dropdown.getByTitle('Reference to link with content javascript')).toHaveFocus()
 
     fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
-    expect(dropdown.getByText('java')).toHaveFocus()
+    expect(dropdown.getByTitle('Reference to link with content java')).toHaveFocus()
 
     // End of the list, we stay on "java"
     fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
-    expect(dropdown.getByText('java')).toHaveFocus()
+    expect(dropdown.getByTitle('Reference to link with content java')).toHaveFocus()
 
     fireEvent.keyUp(palette.getRoot(), {key: 'p', ctrlKey: true})
-    expect(dropdown.getByText('javascript')).toHaveFocus()
+    expect(dropdown.getByTitle('Reference to link with content javascript')).toHaveFocus()
 
     fireEvent.keyUp(palette.getRoot(), {key: 'p', ctrlKey: true})
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
@@ -301,7 +301,7 @@ describe('Click interactive element with the keyboard', () => {
     fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
     fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
 
-    expect(palette.getDropdown().getByText('javascript')).toHaveFocus()
+    expect(palette.getDropdown().getByTitle('Reference to link with content javascript')).toHaveFocus()
 
     fireEvent.keyUp(palette.getDropdown().getByText('javascript'), {key: 'e', ctrlKey: true})
     expect(palette.getDropdown().getByText('javascript')).not.toHaveFocus()
@@ -329,5 +329,25 @@ describe('Click interactive element with the keyboard', () => {
 
     fireEvent.keyUp(palette.getSearchInput(), {key: 'e', ctrlKey: true})
     expect(palette.getSearchInput()).toHaveValue('')
+  })
+
+  test('Shows the element type, the text content and the href for a link', async () => {
+    givenBodyHTML(`
+      <div>
+        <a href="http://example.com#php">php</a>
+      </div>
+    `)
+
+    const {body, palette} = testPalette(document)
+
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
+
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'php'}})
+
+    const phpDropdownLink = within(palette.getDropdown().getByTitle('Reference to link with content php'))
+    expect(phpDropdownLink.getByText('php')).toBeInTheDocument()
+    expect(phpDropdownLink.getByText('link')).toBeInTheDocument()
+    expect(phpDropdownLink.getByText('http://example.com/#php')).toBeInTheDocument()
   })
 })

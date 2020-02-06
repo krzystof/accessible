@@ -232,14 +232,27 @@ export class Palette {
     this.ui.dropdown.hidden = false
 
     links.forEach((link, index) => {
-      const node = document.createElement('button')
-      // const itemClass = `dropdown-result-num-${index}`
-      node.classList.add(css['dropdown-result'])
-      // node.classList.add(itemClass)
-      node.addEventListener('click', () => {
+      const dropdownButton = document.createElement('button')
+      dropdownButton.classList.add(css['dropdown-result'])
+
+      const t = link.textContent || 'no content' // TODO  get the title attributes, or the aria, or the href
+      const elementType = link.tagName === 'A' ? 'link' : 'unknown' // @TODO support more than linksj
+
+      dropdownButton.title = `Reference to ${elementType} with content ${t}`
+
+      dropdownButton.innerHTML = `
+        <div class="${css['dropdown-result__text']}">${t}</div>
+        <div class="${css['dropdown-result__node']}">
+          <span class="${css['dropdown-result__node-type']}">${elementType}</span>
+          <span>${link.href}</span>
+        </div>
+      `
+
+      dropdownButton.addEventListener('click', () => {
         link.click()
       })
-      node.addEventListener('keyup', (event: KeyboardEvent) => {
+
+      dropdownButton.addEventListener('keyup', (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key === 'e') {
           event.stopPropagation()
           this.pageFocusedElement = null
@@ -247,12 +260,10 @@ export class Palette {
           link.focus()
         }
       })
-      let t = link.textContent
-      node.textContent = t || 'no content for this link'
 
       // TODO this is duplicated, should happen when reconciling DOM
-      this.dropdownItems.push(node)
-      this.ui.dropdown.appendChild(node)
+      this.dropdownItems.push(dropdownButton)
+      this.ui.dropdown.appendChild(dropdownButton)
     })
   }
 

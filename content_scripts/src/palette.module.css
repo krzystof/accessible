@@ -3,6 +3,9 @@
   --focus-color: red;
   --palette-color: black;
   --palette-bg-color: white;
+  --color-text-muted: grey;
+  --font-md: 16px;
+  --font-sm: 12px;
 }
 
 .accessible-palette * {
@@ -66,9 +69,7 @@
   position: relative;
   background: var(--palette-bg-color);
   width: 100%;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem;
   font-size: 1.5rem;
   text-align: left;
   border: none;
@@ -85,4 +86,23 @@
   background: var(--focus-color);
   color: var(--palette-bg-color);
   z-index: 1;
+}
+
+.dropdown-result__text {
+  color: var(--palette-color);
+  font-size: var(--font-md);
+  margin-bottom: 5px;
+}
+
+.dropdown-result__node {
+  color: var(--color-text-muted);
+  font-size: var(--font-sm);
+}
+
+.dropdown-result__node-type {
+  display: inline-block;
+  background-color: var(--color-text-muted);
+  color: white;
+  padding: 1px 5px;
+  border-radius: 2px;
 }

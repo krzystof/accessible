@@ -5,6 +5,9 @@
 - Close the palette and focus the link when pressing `ctrl-e` on an highlighted element
 - Press `ctrl-e` when the search input is focused to clear it
 
+### Changed
+- Use CSS modules to prevent CSS clashes with the page styles
+
 ## [0.1.0] - 2020-02-05
 ### Added
 - Open the palette with `ctrl-e`
