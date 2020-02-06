@@ -1,3 +1,7 @@
+import css from './palette.module.css'
+
+console.log('>>>', css)
+
 const MAX_DROPDOWN_ITEMS = 5
 
 type FocusableElement = Element & {focus: () => void}

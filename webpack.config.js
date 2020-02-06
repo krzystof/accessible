@@ -16,10 +16,22 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: ['.ts', '.js' ],
+    extensions: ['.ts', '.js', '.css'],
   },
 };
