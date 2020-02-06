@@ -2,20 +2,18 @@
 
 - [X] Press `ctrl-e` to center the page on the highlighted item, close the palette and focus the item
 - [X] Press `ctrl-e` on the search input to clear it
-- [.] Attach keyboard event listeners to the palette rather than the body
-- [ ] Focus more than just links
+- [X] Attach keyboard event listeners to the palette rather than the body
 - [ ] Scope CSS!
-- [ ] Update filter to show interactive element
 - [ ] Show a nice description of an element (like what element it is)
+- [ ] Focus more than just links
 - [ ] Add demo video to the readme
-- [ ] Add linting
 - [ ] Package and install on my instance of Firefox
-- [ ] Update logo :)
+- [ ] Update logo
 - [ ] Update README
 
 ## v0.X - User Focus Styles (settings)
 ## v0.Y - Inline helps in the UI
-## v1.0 - ?
+## v1.0 - Release on Firefox add-ons and Chrome store
 
 ----
 
@@ -29,9 +27,11 @@
 ## Refactor
 
 * Extract the UI to a separate class (this will separate state/dom, breaking things in smaller pieces. is it worth it?)
+* Add linting?
 
 ## Features
 
+* Update filter to show interactive element while cycling the list
 * Highlight the selected node when browsing the list
 * Use postcss
 * navigate focus with arrows or hjkl
