@@ -7,6 +7,7 @@
   "private": false,
   "scripts": {
     "dev": "webpack",
+    "checkall": "tsc --noEmit && yarn prettier && yarn test",
     "prettier": "prettier --check content_scripts/**/*.ts",
     "web-ext": "web-ext run --url 'https://en.wikipedia.org/wiki/JavaScript'",
     "test": "jest"

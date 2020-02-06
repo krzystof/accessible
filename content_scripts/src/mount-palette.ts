@@ -24,17 +24,13 @@ function mountPalette(doc: Document) {
 
   doc.body.appendChild(palette.ui.rootEl)
 
-  function showOrFocus(event: KeyboardEvent) {
+  doc.body.addEventListener('keyup', (event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === 'e') {
       const activeElement = doc.activeElement
       palette.showOrFocus(activeElement)
       return
     }
-  }
-
-  doc.removeEventListener('keyup', showOrFocus)
-
-  doc.addEventListener('keyup', showOrFocus)
+  })
 
   return palette
 }

@@ -2,6 +2,19 @@ import {screen, queries, wait, within, fireEvent} from '@testing-library/dom'
 import {mountPalette} from './mount-palette'
 import '@testing-library/jest-dom'
 
+/**
+ * Use this to create a brand new body without event listeners
+ * between tests
+ */
+function givenBodyHTML(html: string) {
+  const freshBody = document.createElement('body')
+  freshBody.innerHTML = html
+  document.body = freshBody
+}
+
+/**
+ * Mount the palette to the given doc and returns some test helpers
+ */
 function testPalette(doc: Document) {
   mountPalette(doc)
 
@@ -34,13 +47,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Filters the document links by their href on input and show them in the dropdown', async () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
@@ -59,13 +72,13 @@ describe('Click interactive element with the keyboard', () => {
 
   test('Highlight an item, then press enter to navigate to it', async () => {
     const spyClick = jest.fn()
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java" class="java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
     const javaLink = document.querySelector('.java')!
     javaLink.addEventListener('click', spyClick)
 
@@ -93,13 +106,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Navigate the list up and down', async () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
@@ -134,13 +147,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Clears the dropdown if the search query is empty', async () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
@@ -166,13 +179,13 @@ describe('Click interactive element with the keyboard', () => {
     const spyJavascriptClick = jest.fn()
     const spyJavaClick = jest.fn()
     const spyPhpClick = jest.fn()
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
     document.querySelector('[href="#javascript"]')!.addEventListener('click', spyJavascriptClick)
     document.querySelector('[href="#java"]')!.addEventListener('click', spyJavaClick)
     document.querySelector('[href="#php"]')!.addEventListener('click', spyPhpClick)
@@ -198,13 +211,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Type Esc or ctrl-c to close the palette', async () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
@@ -224,13 +237,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Closes the palette when clicking outside', () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
@@ -247,13 +260,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Returns the focus to the element that had it before opening the palette', () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
@@ -272,13 +285,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Focus an element on the page via the palette', async () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript" data-testid="javascript-link">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
@@ -297,13 +310,13 @@ describe('Click interactive element with the keyboard', () => {
   })
 
   test('Press ctrl-e when the search input is focused to clear it', async () => {
-    document.body.innerHTML = `
+    givenBodyHTML(`
       <div>
         <a href="#javascript">javascript</a>
         <a href="#java">java</a>
         <a href="#php">php</a>
       </div>
-    `
+    `)
 
     const {body, palette} = testPalette(document)
 
