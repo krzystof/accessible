@@ -10,7 +10,7 @@
     {
       "matches": ["*://*/*"],
       "js": ["content_scripts/dist/main.js"],
-      "css": ["content_scripts/palette.css"]
+      "css": ["content_scripts/dist/main.css"]
     }
   ],
   "background": {

@@ -1,7 +1,5 @@
 import css from './palette.module.css'
 
-console.log('>>>', css)
-
 const MAX_DROPDOWN_ITEMS = 5
 
 type FocusableElement = Element & {focus: () => void}
@@ -24,7 +22,8 @@ type PaletteCallbacks = {
 
 export class Palette {
   ui: PaletteDOMElements // TODO extract to a separate class that handles DOM updates
-  handlers: PaletteCallbacks
+  domCallbacks: PaletteCallbacks
+
   pageFocusedElement: null | Element = null
 
   docLinks: HTMLAnchorElement[] = []
@@ -34,116 +33,26 @@ export class Palette {
 
   constructor(elements: PaletteDOMElements, callbacks: PaletteCallbacks) {
     this.ui = elements
-    this.handlers = callbacks
+    this.domCallbacks = callbacks
 
     this.initUi()
     this.bindEventHandlers()
 
-    this.handlers.getLinks().then(links => this.setLinks(links))
-  }
-
-  // Public Palette API
-
-  setLinks(links: IterableIterator<HTMLAnchorElement>) {
-    this.docLinks = Array.from(links)
-  }
-
-  isVisible() {
-    // TODO use the "hidden" attribute
-    return this.ui.rootEl.classList.contains('visible')
-  }
-
-  isHidden() {
-    return !this.isVisible()
-  }
-
-  showOrFocus(focusedElement: null | Element) {
-    this.pageFocusedElement = focusedElement
-
-    if (this.isHidden()) {
-      this.ui.rootEl.classList.add('visible')
-      this.highlightedResultIndex = null
-      this.ui.input.focus()
-      return
-    }
-  }
-
-  hide() {
-    this.ui.rootEl.classList.remove('visible')
-
-    if (isFocusable(this.pageFocusedElement)) {
-      this.pageFocusedElement.focus()
-    }
-  }
-
-  highlightPreviousResult() {
-    const shownItems = this.dropdownItems.length
-
-    if (shownItems === 0) {
-      this.highlightedResultIndex = null
-      return
-    }
-
-    if (this.highlightedResultIndex === null) {
-      return
-    }
-
-    if (this.highlightedResultIndex === 0) {
-      this.highlightedResultIndex = null
-      this.ui.input.focus()
-      return
-    }
-
-    this.highlightedResultIndex -= 1
-
-    this.dropdownItems[this.highlightedResultIndex].focus()
-  }
-
-  highlightNextResult() {
-    const shownItems = this.dropdownItems.length
-
-    if (shownItems === 0) {
-      this.highlightedResultIndex = null
-      return
-    }
-
-    if (this.highlightedResultIndex === null) {
-      this.highlightedResultIndex = 0
-    } else if (this.highlightedResultIndex + 1 === shownItems) {
-      // We are at the end of the list, don't do anything
-      return
-    } else {
-      this.highlightedResultIndex += 1
-    }
-
-    this.dropdownItems[this.highlightedResultIndex].focus()
-  }
-
-  validateSelection() {
-    if (this.dropdownItems.length === 0) {
-      return
-    }
-
-    if (this.highlightedResultIndex === null) {
-      this.dropdownItems[0].click()
-      return
-    }
-
-    this.dropdownItems[this.highlightedResultIndex].click()
+    this.domCallbacks.getLinks().then(links => this.setLinks(links))
   }
 
   // Initial state of the palette
 
   private initUi() {
-    this.ui.rootEl.classList.add('accessible-palette')
+    this.ui.rootEl.classList.add(css['accessible-palette'])
     this.ui.rootEl.dataset.testid = 'accessible-palette'
 
-    this.ui.wrap.classList.add('wrap')
-    this.ui.dropdown.classList.add('dropdown')
+    this.ui.wrap.classList.add(css['wrap'])
+    this.ui.dropdown.classList.add(css['dropdown'])
     this.ui.dropdown.hidden = true
     this.ui.dropdown.dataset.testid = 'accessible-palette-dropdown'
 
-    this.ui.inputWrap.classList.add('input-wrap')
+    this.ui.inputWrap.classList.add(css['input-wrap'])
 
     this.ui.input.title = 'search-input'
 
@@ -224,7 +133,96 @@ export class Palette {
     })
   }
 
+  // Public Palette API
+
+  showOrFocus(focusedElement: null | Element) {
+    if (this.isHidden()) {
+      this.pageFocusedElement = focusedElement
+      this.ui.rootEl.classList.add(css['visible'])
+      this.highlightedResultIndex = null
+      this.ui.input.focus()
+      return
+    }
+  }
+
   // Private Palette API
+
+  private setLinks(links: IterableIterator<HTMLAnchorElement>) {
+    this.docLinks = Array.from(links)
+  }
+
+  private isVisible() {
+    // TODO use the "hidden" attribute
+    return this.ui.rootEl.classList.contains(css['visible'])
+  }
+
+  private isHidden() {
+    return !this.isVisible()
+  }
+
+  private hide() {
+    this.ui.rootEl.classList.remove(css['visible'])
+
+    if (isFocusable(this.pageFocusedElement)) {
+      this.pageFocusedElement.focus()
+    }
+  }
+
+  private highlightPreviousResult() {
+    const shownItems = this.dropdownItems.length
+
+    if (shownItems === 0) {
+      this.highlightedResultIndex = null
+      return
+    }
+
+    if (this.highlightedResultIndex === null) {
+      return
+    }
+
+    if (this.highlightedResultIndex === 0) {
+      this.highlightedResultIndex = null
+      this.ui.input.focus()
+      return
+    }
+
+    this.highlightedResultIndex -= 1
+
+    this.dropdownItems[this.highlightedResultIndex].focus()
+  }
+
+  private highlightNextResult() {
+    const shownItems = this.dropdownItems.length
+
+    if (shownItems === 0) {
+      this.highlightedResultIndex = null
+      return
+    }
+
+    if (this.highlightedResultIndex === null) {
+      this.highlightedResultIndex = 0
+    } else if (this.highlightedResultIndex + 1 === shownItems) {
+      // We are at the end of the list, don't do anything
+      return
+    } else {
+      this.highlightedResultIndex += 1
+    }
+
+    this.dropdownItems[this.highlightedResultIndex].focus()
+  }
+
+  private validateSelection() {
+    if (this.dropdownItems.length === 0) {
+      return
+    }
+
+    if (this.highlightedResultIndex === null) {
+      this.dropdownItems[0].click()
+      return
+    }
+
+    this.dropdownItems[this.highlightedResultIndex].click()
+  }
 
   private showDropdown(links: HTMLAnchorElement[]) {
     this.ui.dropdown.innerHTML = ''
@@ -235,9 +233,9 @@ export class Palette {
 
     links.forEach((link, index) => {
       const node = document.createElement('button')
-      const itemClass = `dropdown-result-num-${index}`
-      node.classList.add('dropdown-result')
-      node.classList.add(itemClass)
+      // const itemClass = `dropdown-result-num-${index}`
+      node.classList.add(css['dropdown-result'])
+      // node.classList.add(itemClass)
       node.addEventListener('click', () => {
         link.click()
       })
