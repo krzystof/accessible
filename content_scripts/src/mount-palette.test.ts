@@ -350,4 +350,23 @@ describe('Click interactive element with the keyboard', () => {
     expect(phpDropdownLink.getByText('link')).toBeInTheDocument()
     expect(phpDropdownLink.getByText('http://example.com/#php')).toBeInTheDocument()
   })
+
+  test('Grab links and buttons from the DOM', async () => {
+    givenBodyHTML(`
+      <div>
+        <a href="#cats">cats</a>
+        <button>Send love to cats</button>
+      </div>
+    `)
+
+    const {body, palette} = testPalette(document)
+
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
+
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'cats'}})
+
+    expect(palette.getDropdown().getByTitle('Reference to link with content cats')).toBeInTheDocument()
+    expect(palette.getDropdown().getByTitle('Reference to button with content Send love to cats')).toBeInTheDocument()
+  })
 })

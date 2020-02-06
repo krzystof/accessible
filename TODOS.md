@@ -5,13 +5,15 @@
 - [X] Attach keyboard event listeners to the palette rather than the body
 - [X] Scope CSS using CSS modules
 - [X] Show a nice description of an element (like what element it is)
-- [ ] Focus more than just links (button)
+- [X] Focus more than just links (button)
 - [ ] Add demo video to the readme
 - [ ] Package and install on my instance of Firefox
 - [ ] Update logo
 - [ ] Update README
 - [ ] Focus all interactive elements
-- [ ] Update the list of interactive elements when the DOM changes
+- [ ] Extract the UI to a separate class (this will separate state/dom, breaking things in smaller pieces. is it worth it?)
+- [ ] Focus all interactive element (aria role)
+- [ ] Case insensitive search
 
 ## v0.X - User Focus Styles (settings)
 ## v0.Y - Inline helps in the UI
@@ -23,12 +25,12 @@
 
 ## Bugs
 
+* Update the list of interactive elements when the DOM changes
 * Prevent clashes with sites shortcuts
 * Updated highlighted items when pressing `tab` and `shift-tab`
 
 ## Refactor
 
-* Extract the UI to a separate class (this will separate state/dom, breaking things in smaller pieces. is it worth it?)
 * Add linting?
 
 ## Features

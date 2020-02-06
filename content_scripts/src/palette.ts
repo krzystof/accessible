@@ -8,6 +8,21 @@ function isFocusable(element: null | Element): element is FocusableElement {
   return element ? 'focus' in element : false
 }
 
+function isLink(element: HTMLElement): element is HTMLAnchorElement {
+  return 'href' in element
+}
+
+function getPrettyTagName(tagName: string) {
+  if (tagName === 'A') {
+    return 'link'
+  } else if (tagName === 'BUTTON') {
+    return 'button'
+  } else {
+    console.log('>>>', tagName)
+    return 'unknown'
+  }
+}
+
 type PaletteDOMElements = {
   rootEl: HTMLDivElement
   wrap: HTMLDivElement
@@ -17,7 +32,7 @@ type PaletteDOMElements = {
 }
 
 type PaletteCallbacks = {
-  getLinks: () => Promise<IterableIterator<HTMLAnchorElement>>
+  getInteractiveElements: () => Promise<IterableIterator<Element>>
 }
 
 export class Palette {
@@ -26,7 +41,7 @@ export class Palette {
 
   pageFocusedElement: null | Element = null
 
-  docLinks: HTMLAnchorElement[] = []
+  docElements: HTMLElement[] = []
   dropdownItems: HTMLButtonElement[] = []
 
   highlightedResultIndex: null | number = null
@@ -38,7 +53,7 @@ export class Palette {
     this.initUi()
     this.bindEventHandlers()
 
-    this.domCallbacks.getLinks().then(links => this.setLinks(links))
+    this.domCallbacks.getInteractiveElements().then(elements => this.setInteractiveElements(elements))
   }
 
   // Initial state of the palette
@@ -72,7 +87,7 @@ export class Palette {
       }
 
       let filteredLinks = []
-      for (let l of this.docLinks) {
+      for (let l of this.docElements) {
         // TODO make it case insensitive
         if (l.textContent && l.textContent.includes(eventTarget.value)) {
           filteredLinks.push(l)
@@ -147,8 +162,8 @@ export class Palette {
 
   // Private Palette API
 
-  private setLinks(links: IterableIterator<HTMLAnchorElement>) {
-    this.docLinks = Array.from(links)
+  private setInteractiveElements(elements: IterableIterator<Element>) {
+    this.docElements = Array.from(elements) as HTMLElement[]
   }
 
   private isVisible() {
@@ -224,19 +239,20 @@ export class Palette {
     this.dropdownItems[this.highlightedResultIndex].click()
   }
 
-  private showDropdown(links: HTMLAnchorElement[]) {
+  private showDropdown(elements: HTMLElement[]) {
     this.ui.dropdown.innerHTML = ''
 
     // TODO don't throw away items here
     this.dropdownItems = []
     this.ui.dropdown.hidden = false
 
-    links.forEach((link, index) => {
+    elements.forEach((element, index) => {
       const dropdownButton = document.createElement('button')
       dropdownButton.classList.add(css['dropdown-result'])
 
-      const t = link.textContent || 'no content' // TODO  get the title attributes, or the aria, or the href
-      const elementType = link.tagName === 'A' ? 'link' : 'unknown' // @TODO support more than linksj
+      const t = element.textContent || 'no content' // TODO  get the title attributes, or the aria, or the href  or the value
+
+      const elementType = getPrettyTagName(element.tagName)
 
       dropdownButton.title = `Reference to ${elementType} with content ${t}`
 
@@ -244,12 +260,12 @@ export class Palette {
         <div class="${css['dropdown-result__text']}">${t}</div>
         <div class="${css['dropdown-result__node']}">
           <span class="${css['dropdown-result__node-type']}">${elementType}</span>
-          <span>${link.href}</span>
+          <span>${isLink(element) ? element.href : ''}</span>
         </div>
       `
 
       dropdownButton.addEventListener('click', () => {
-        link.click()
+        element.click()
       })
 
       dropdownButton.addEventListener('keyup', (event: KeyboardEvent) => {
@@ -257,7 +273,7 @@ export class Palette {
           event.stopPropagation()
           this.pageFocusedElement = null
           this.hide()
-          link.focus()
+          element.focus()
         }
       })
 

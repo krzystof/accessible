@@ -4,6 +4,7 @@
 ### Added
 - Close the palette and focus the link when pressing `ctrl-e` on an highlighted element
 - Press `ctrl-e` when the search input is focused to clear it
+- Allow to match buttons in the page
 
 ### Changed
 - Use CSS modules to prevent CSS clashes with the page styles

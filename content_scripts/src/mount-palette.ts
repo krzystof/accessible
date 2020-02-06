@@ -3,10 +3,10 @@ import {Palette} from './palette'
 // This script runs in the document context
 
 function mountPalette(doc: Document) {
-  function getLinks() {
+  function getInteractiveElements() {
     // TODO Select more than just links
-    const links = doc.querySelectorAll('a')
-    return Promise.resolve(links.values())
+    const elements = doc.querySelectorAll('a, button')
+    return Promise.resolve(elements.values())
   }
 
   const palette = new Palette(
@@ -18,7 +18,7 @@ function mountPalette(doc: Document) {
       input: doc.createElement('input'),
     },
     {
-      getLinks,
+      getInteractiveElements,
     }
   )
 
