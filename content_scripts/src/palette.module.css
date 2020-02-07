@@ -8,6 +8,10 @@
   --font-sm: 12px;
 }
 
+*:focus {
+  outline: 5px solid var(--focus-color);
+}
+
 .accessible-palette * {
   box-sizing: border-box;
 }

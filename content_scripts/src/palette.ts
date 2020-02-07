@@ -271,16 +271,18 @@ export class Palette {
         </div>
       `
 
-      dropdownButton.addEventListener('click', () => {
+      dropdownButton.addEventListener('click', (event: Event) => {
         element.click()
+        this.hide()
+        event.stopPropagation()
       })
 
       dropdownButton.addEventListener('keyup', (event: KeyboardEvent) => {
         if (event.ctrlKey && event.key === 'e') {
-          event.stopPropagation()
           this.pageFocusedElement = null
-          this.hide()
           element.focus()
+          this.hide()
+          event.stopPropagation()
         }
       })
 
