@@ -12,7 +12,7 @@
 - [ ] Package and install on my instance of Firefox
 - [ ] Highlight the highlighted element in the dom
 - [ ] If it's open and I type `ctrl-e`, focus the search
-- [ ] Update logo
+[](-) [ ] Update logo
 - [ ] Update README
 - [ ] Focus all interactive element (aria role)
 - [ ] Allow to list all links or button or inputs on the page
