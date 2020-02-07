@@ -1,164 +1,11 @@
+import {PaletteUI, PaletteDOMElements} from './palette-ui'
+import {isFocusable, isLink, getPrettyTagName} from './utils'
 import css from './palette.module.css'
 
 const MAX_DROPDOWN_ITEMS = 5
 
-type FocusableElement = HTMLElement & {focus: () => void}
-
-function isFocusable(element: null | Element): element is FocusableElement {
-  return element ? 'focus' in element : false
-}
-
-function isLink(element: HTMLElement): element is HTMLAnchorElement {
-  return 'href' in element
-}
-
-function getPrettyTagName(tagName: string) {
-  if (tagName === 'A') {
-    return 'link'
-  } else if (tagName === 'BUTTON') {
-    return 'button'
-  } else {
-    console.log('>>>', tagName)
-    return 'unknown'
-  }
-}
-
-type PaletteDOMElements = {
-  rootEl: HTMLDivElement
-  wrap: HTMLDivElement
-  dropdown: HTMLDivElement
-  inputWrap: HTMLDivElement
-  input: HTMLInputElement
-}
-
-type PaletteHandlers = {
-  onSearch: (event: Event) => void
-  onClearSearch: () => void
-  onClose: () => void
-  onPrevious: () => void
-  onNext: () => void
-  onValidate: () => void
-}
-
 type PaletteCallbacks = {
   getInteractiveElements: () => Promise<NodeList>
-}
-
-class PaletteUI {
-  els: PaletteDOMElements
-  constructor(els: PaletteDOMElements, eventHandlers: PaletteHandlers) {
-    this.els = els
-
-    // Initialise the elements
-    this.els.rootEl.classList.add(css['accessible-palette'])
-    this.els.rootEl.dataset.testid = 'accessible-palette'
-
-    this.els.wrap.classList.add(css['wrap'])
-    this.els.dropdown.classList.add(css['dropdown'])
-    this.els.dropdown.hidden = true
-    this.els.dropdown.dataset.testid = 'accessible-palette-dropdown'
-
-    this.els.inputWrap.classList.add(css['input-wrap'])
-
-    this.els.input.title = 'search-input'
-
-    this.els.inputWrap.appendChild(this.els.input)
-    this.els.wrap.appendChild(this.els.inputWrap)
-    this.els.wrap.appendChild(this.els.dropdown)
-    this.els.rootEl.appendChild(this.els.wrap)
-
-    // Attach event handlers
-    this.els.input.addEventListener('input', eventHandlers.onSearch)
-
-    this.els.input.addEventListener('keyup', (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key === 'e') {
-        this.els.input.value = ''
-        eventHandlers.onClearSearch()
-        event.preventDefault()
-        return
-      }
-    })
-
-    this.els.rootEl.addEventListener('click', (event: Event) => {
-      const eventTarget = event.target as HTMLElement
-      if (eventTarget && !this.els.wrap.contains(eventTarget)) {
-        eventHandlers.onClose()
-      }
-    })
-
-    this.els.wrap.addEventListener('keydown', (event: KeyboardEvent) => {
-      // Prevent the page from scrolling
-      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-    })
-
-    this.els.wrap.addEventListener('keyup', (event: KeyboardEvent) => {
-      if (event.key === 'Escape' || (event.ctrlKey && event.key === 'c')) {
-        eventHandlers.onClose()
-        event.preventDefault()
-        return
-      }
-
-      // FIXME this opens a new window in firefox on linux
-      if ((event.ctrlKey && event.key === 'n') || event.key === 'ArrowDown') {
-        eventHandlers.onNext()
-        event.preventDefault()
-        return
-      }
-
-      // FIXME this prints the page in firefox on linux
-      if ((event.ctrlKey && event.key === 'p') || event.key === 'ArrowUp') {
-        eventHandlers.onPrevious()
-        event.preventDefault()
-        return
-      }
-
-      if (event.key === 'Enter') {
-        eventHandlers.onValidate()
-        event.preventDefault()
-        return
-      }
-    })
-  }
-
-  isVisible() {
-    // TODO use the "hidden" attribute
-    return this.els.rootEl.classList.contains(css['visible'])
-  }
-
-  showPalette() {
-    this.els.rootEl.classList.add(css['visible'])
-    this.els.input.focus()
-  }
-
-  hidePalette() {
-    this.els.rootEl.classList.remove(css['visible'])
-  }
-
-  hideDropdown() {
-    this.els.dropdown.innerHTML = ''
-    this.els.dropdown.hidden = true
-  }
-
-  showDropdownItems(buttons: HTMLButtonElement[]) {
-    this.els.dropdown.innerHTML = ''
-    this.els.dropdown.hidden = buttons.length === 0
-
-    buttons.forEach(button => this.els.dropdown.appendChild(button))
-  }
-
-  focusItem(item: 'input' | number) {
-    if (item === 'input') {
-      this.els.input.focus()
-    } else {
-      const button = this.els.dropdown.children[item]
-      if (isFocusable(button)) {
-        button.focus()
-      }
-    }
-  }
 }
 
 export class Palette {
@@ -231,8 +78,6 @@ export class Palette {
   // Private Palette API
 
   private setInteractiveElements(elements: NodeList) {
-    console.log('setInteractiveElements >>>', elements)
-    console.log('as array >>>', [...elements])
     this.docElements = [...elements] as HTMLElement[]
   }
 
@@ -307,6 +152,8 @@ export class Palette {
   private showDropdown(elements: HTMLElement[]) {
     // TODO don't throw away items here
     this.dropdownItems = []
+
+    //TODO build that in the UI!
     elements.forEach((element, index) => {
       const dropdownButton = document.createElement('button')
       dropdownButton.classList.add(css['dropdown-result'])
