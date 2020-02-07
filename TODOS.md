@@ -6,14 +6,15 @@
 - [X] Scope CSS using CSS modules
 - [X] Show a nice description of an element (like what element it is)
 - [X] Focus more than just links (button)
-- [ ] Extract the UI to a separate class (this will separate state/dom, breaking things in smaller pieces. is it worth it?)
-- [ ] Fix tests
-- [ ] Add demo video to the readme
+- [X] Extract the UI to a separate class (this will separate state/dom, breaking things in smaller pieces. is it worth it?)
+- [X] Fix tests
+- [X] Add demo video to the readme
+- [ ] Improve the demo cause it's shocking
 - [ ] Package and install on my instance of Firefox
+- [ ] Add instructions to the readme to install on Firefox
+- [ ] Add license
 - [ ] Highlight the highlighted element in the dom
 - [ ] If it's open and I type `ctrl-e`, focus the search
-[](-) [ ] Update logo
-- [ ] Update README
 - [ ] Focus all interactive element (aria role)
 - [ ] Allow to list all links or button or inputs on the page
 - [ ] Case insensitive search
