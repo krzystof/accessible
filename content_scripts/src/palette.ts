@@ -138,12 +138,14 @@ export class Palette {
         return
       }
 
-      if (event.ctrlKey && event.key === 'n' || event.key === 'ArrowDown') { // FIXME this opens a new window in firefox on linux, arrow down scrolls the body
+      // FIXME this opens a new window in firefox on linux
+      if ((event.ctrlKey && event.key === 'n') || event.key === 'ArrowDown') {
         this.highlightNextResult()
         return
       }
 
-      if (event.ctrlKey && event.key === 'p' || event.key === 'ArrowUp') { // FIXME this prints the page in firefox on linux, arrow up scrolls the body
+      // FIXME this prints the page in firefox on linux
+      if ((event.ctrlKey && event.key === 'p') || event.key === 'ArrowUp') {
         this.highlightPreviousResult()
         return
       }
