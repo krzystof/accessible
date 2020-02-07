@@ -92,15 +92,15 @@ describe('Click interactive element with the keyboard', () => {
 
     const dropdown = palette.getDropdown()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
     expect(dropdown.getByTitle('Reference to link with content javascript')).toHaveFocus()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
     expect(dropdown.getByTitle('Reference to link with content java')).toHaveFocus()
 
     expect(spyClick).not.toHaveBeenCalled()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'Enter'})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'Enter'})
 
     expect(spyClick).toHaveBeenCalled()
   })
@@ -125,24 +125,24 @@ describe('Click interactive element with the keyboard', () => {
     const dropdown = palette.getDropdown()
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
     expect(dropdown.getByTitle('Reference to link with content javascript')).toHaveFocus()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
     expect(dropdown.getByTitle('Reference to link with content java')).toHaveFocus()
 
     // End of the list, we stay on "java"
-    fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
     expect(dropdown.getByTitle('Reference to link with content java')).toHaveFocus()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'p', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'p', ctrlKey: true})
     expect(dropdown.getByTitle('Reference to link with content javascript')).toHaveFocus()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'p', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'p', ctrlKey: true})
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
 
     // Beginning of the list, stay on the input
-    fireEvent.keyUp(palette.getRoot(), {key: 'p', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'p', ctrlKey: true})
     expect(queries.getByTitle(body, 'search-input')).toHaveFocus()
   })
 
@@ -203,7 +203,7 @@ describe('Click interactive element with the keyboard', () => {
     expect(spyPhpClick).not.toHaveBeenCalled()
 
     fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
-    fireEvent.keyUp(palette.getRoot(), {key: 'Enter'})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'Enter'})
 
     expect(spyJavascriptClick).toHaveBeenCalled()
     expect(spyJavaClick).not.toHaveBeenCalled()
@@ -226,13 +226,13 @@ describe('Click interactive element with the keyboard', () => {
     fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     expect(palette.getRoot()).toHaveClass('visible')
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'Escape'})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'Escape'})
     expect(palette.getRoot()).not.toHaveClass('visible')
 
     fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     expect(palette.getRoot()).toHaveClass('visible')
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'c', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'c', ctrlKey: true})
     expect(palette.getRoot()).not.toHaveClass('visible')
   })
 
@@ -279,7 +279,7 @@ describe('Click interactive element with the keyboard', () => {
     expect(queries.getByText(body, 'java')).not.toHaveFocus()
     expect(palette.getSearchInput()).toHaveFocus()
 
-    fireEvent.keyUp(palette.getRoot(), {key: 'Escape'})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'Escape'})
     expect(queries.getByText(body, 'java')).toHaveFocus()
     expect(palette.getSearchInput()).not.toHaveFocus()
   })
@@ -299,7 +299,7 @@ describe('Click interactive element with the keyboard', () => {
 
     fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     fireEvent.input(palette.getSearchInput(), {target: {value: 'jav'}})
-    fireEvent.keyUp(palette.getRoot(), {key: 'n', ctrlKey: true})
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
 
     expect(palette.getDropdown().getByTitle('Reference to link with content javascript')).toHaveFocus()
 
