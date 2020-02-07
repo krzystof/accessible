@@ -121,28 +121,35 @@ export class Palette {
       }
     })
 
-    this.ui.rootEl.addEventListener('keyup', (event: KeyboardEvent) => {
+    this.ui.wrap.addEventListener('keydown', (event: KeyboardEvent) => {
+      // Prevent the page from scrolling
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+
+    this.ui.wrap.addEventListener('keyup', (event: KeyboardEvent) => {
+      event.preventDefault()
+      event.stopPropagation()
+
       if (event.key === 'Escape' || (event.ctrlKey && event.key === 'c')) {
         this.hide()
-        event.stopPropagation()
         return
       }
 
-      if (event.ctrlKey && event.key === 'n') {
+      if (event.ctrlKey && event.key === 'n' || event.key === 'ArrowDown') { // FIXME this opens a new window in firefox on linux, arrow down scrolls the body
         this.highlightNextResult()
-        event.stopPropagation()
         return
       }
 
-      if (event.ctrlKey && event.key === 'p') {
+      if (event.ctrlKey && event.key === 'p' || event.key === 'ArrowUp') { // FIXME this prints the page in firefox on linux, arrow up scrolls the body
         this.highlightPreviousResult()
-        event.stopPropagation()
         return
       }
 
       if (event.key === 'Enter') {
         this.validateSelection()
-        event.stopPropagation()
         return
       }
     })
