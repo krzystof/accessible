@@ -19,7 +19,7 @@
 
 ## Usage
 
-![accessible_demo](https://user-images.githubusercontent.com/11472671/74067079-0386c800-49be-11ea-859e-75915608eaa5.gif)
+![demo](https://user-images.githubusercontent.com/11472671/74071492-a98bff80-49c9-11ea-84fa-815c7546be07.gif)
 
 *Commands:*
 - `ctrl-e` to open the palette. Type to filter the links on the page.
