@@ -1,21 +1,23 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-- Close the palette and focus the link when pressing `ctrl-e` on an highlighted element
-- Press `ctrl-e` when the search input is focused to clear it
-- Allow to match buttons in the page
+_Nothing (yet)_
 
-### Changed
-- Use CSS modules to prevent CSS clashes with the page styles
+----
 
-## [0.1.0] - 2020-02-05
+## [0.1.0] - 2020-02-11
+> The version that I'll dogfood
 ### Added
 - Open the palette with `ctrl-e`
+- Search for links or buttons on the page and navigate the matches with `ctrl-n` (next) and `ctrl-p` (previous)
+- Clear the search with `ctrl-e` (when search is focused)
+- Focus the highlighted element with `ctrl-e` (when an item of the dropdown is focused)
 - Close the palette with `ctrl-c` or `Escape`
-- Search for links on the page and navigate the matches with `ctrl-n` (next) and `ctrl-p` (previous)
-- Press `Enter` on an highlighted element to clink the link
-- Press `Enter` with no highlighted element to click the first link of the matching items
+- Press `Enter` on an highlighted element to clink the element
+- Press `Enter` with no highlighted element to click the first element of the matching items
+- Use CSS modules to prevent CSS clashes with the page styles
+
+----
 
 [Unreleased]: https://github.com/krzystof/accessible/compare/v0.1.0...HEAD
 [0.1]: https://github.com/krzystof/accessible/releases/tag/v0.1.0

@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Accessible",
-  "version": "0.1",
-  "description": "A (work-in-progress) tool that enhance brwosing the web.",
+  "version": "0.1.0",
+  "description": "A (work-in-progress) tool that enhance browsing the web.",
   "icons": {
     "48": "a.svg"
   },
