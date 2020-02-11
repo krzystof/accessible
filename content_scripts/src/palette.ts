@@ -43,10 +43,11 @@ export class Palette {
       return
     }
 
+    const searchValue = eventTarget.value.toLowerCase()
+
     let filteredLinks = []
     for (let l of this.docElements) {
-      // TODO make it fuzzy and case insensitive
-      if (l.textContent && l.textContent.includes(eventTarget.value)) {
+      if (l.textContent && l.textContent.toLowerCase().includes(searchValue)) {
         filteredLinks.push(l)
       }
     }

@@ -1,7 +1,8 @@
 # Changelog
 
 ## [Unreleased]
-_Nothing (yet)_
+### Changed
+- Make the search case insensitive
 
 ----
 
