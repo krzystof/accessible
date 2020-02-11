@@ -4,6 +4,7 @@
 ### Changed
 - Make the search case insensitive
 - Move the logic to create html buttons in the ui class
+- Highlight the element on the page related to the highlighted dropdown item
 
 ----
 

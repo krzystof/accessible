@@ -32,9 +32,16 @@
 
 ## Installation
 
-*Coming soon* The extension is not stable enough yet to install it on your Firefox instance (Chromium browsers not tested, coming later).
+The extension is not stable enough yet to install it on your Firefox instance via the addon store (Chromium browsers not tested, coming later).
+
+You can install it manually (until Firefox is restarted) using the following steps:
+- run `yarn dev` to build the javascript assets
+- run `web-ext build` to generate the artifact in `./web-ext-artifacts/accessible-vX.X.X.zip`
+- open `about:debugging` in Firefox
+- click "This Firefox", "Load Temporary Add-On" and select generated zip file
 
 ## Development
 
-Dependencies: Firefox, `npm install --global web-ext` and `yarn install`
+Install dependencies: Firefox, `npm install --global web-ext` and `yarn install`
+
 Run `yarn dev` to build the code, and `yarn web-ext` to open Firefox with the extension

@@ -8,9 +8,16 @@
   --font-sm: 12px;
 }
 
+/* Page overrides */
 *:focus {
   outline: 5px solid var(--focus-color);
 }
+
+.highlighted-target {
+  outline: 5px dashed var(--focus-color);
+}
+
+/* Palette styles */
 
 .accessible-palette * {
   box-sizing: border-box;

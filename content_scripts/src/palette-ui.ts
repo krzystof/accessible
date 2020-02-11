@@ -12,7 +12,7 @@ export type PaletteDOMElements = {
 type PaletteHandlers = {
   onSearch: (event: Event) => void
   onClearSearch: () => void
-  onClose: () => void
+  onClose: (element?: HTMLElement) => void
   onPrevious: () => void
   onNext: () => void
   onValidate: () => void
@@ -27,7 +27,7 @@ export type DropdownItem = {
 
 export class PaletteUI {
   els: PaletteDOMElements
-  onClose: () => void
+  onClose: (element?: HTMLElement) => void
 
   constructor(els: PaletteDOMElements, eventHandlers: PaletteHandlers) {
     this.els = els
@@ -171,10 +171,17 @@ export class PaletteUI {
 
     dropdownButton.addEventListener('keyup', (event: KeyboardEvent) => {
       if (event.ctrlKey && event.key === 'e') {
-        item.pageElement.focus()
-        this.onClose()
+        this.onClose(item.pageElement)
         event.stopPropagation()
       }
+    })
+
+    dropdownButton.addEventListener('focus', () => {
+      item.pageElement.classList.add(css['highlighted-target'])
+    })
+
+    dropdownButton.addEventListener('blur', () => {
+      item.pageElement.classList.remove(css['highlighted-target'])
     })
 
     return dropdownButton

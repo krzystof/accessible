@@ -8,7 +8,7 @@ type PaletteCallbacks = {
 }
 
 export class Palette {
-  nextui: PaletteUI
+  ui: PaletteUI
   domCallbacks: PaletteCallbacks
 
   pageFocusedElement: null | Element = null
@@ -19,10 +19,10 @@ export class Palette {
   highlightedResultIndex: null | number = null
 
   constructor(elements: PaletteDOMElements, callbacks: PaletteCallbacks) {
-    this.nextui = new PaletteUI(elements, {
+    this.ui = new PaletteUI(elements, {
       onSearch: this.filterPageElements.bind(this),
       onClearSearch: this.hideDropdown.bind(this),
-      onClose: this.hide.bind(this),
+      onClose: (element?: HTMLElement) => this.hide(element),
       onPrevious: this.highlightPreviousResult.bind(this),
       onNext: this.highlightNextResult.bind(this),
       onValidate: this.validateSelection.bind(this),
@@ -63,7 +63,7 @@ export class Palette {
   // Public Palette API
 
   rootEl() {
-    return this.nextui.els.rootEl
+    return this.ui.els.rootEl
   }
 
   showOrFocus(focusedElement: null | Element) {
@@ -72,7 +72,7 @@ export class Palette {
     }
     this.pageFocusedElement = focusedElement
     this.highlightedResultIndex = null
-    this.nextui.showPalette()
+    this.ui.showPalette()
   }
 
   // Private Palette API
@@ -82,13 +82,15 @@ export class Palette {
   }
 
   private isVisible() {
-    return this.nextui.isVisible()
+    return this.ui.isVisible()
   }
 
-  private hide() {
-    this.nextui.hidePalette()
+  private hide(elementToFocus?: HTMLElement) {
+    this.ui.hidePalette()
 
-    if (isFocusable(this.pageFocusedElement)) {
+    if (elementToFocus) {
+      elementToFocus.focus()
+    } else if (isFocusable(this.pageFocusedElement)) {
       this.pageFocusedElement.focus()
     }
   }
@@ -107,13 +109,13 @@ export class Palette {
 
     if (this.highlightedResultIndex === 0) {
       this.highlightedResultIndex = null
-      this.nextui.focusItem('input')
+      this.ui.focusItem('input')
       return
     }
 
     this.highlightedResultIndex -= 1
 
-    this.nextui.focusItem(this.highlightedResultIndex)
+    this.ui.focusItem(this.highlightedResultIndex)
   }
 
   private highlightNextResult() {
@@ -133,7 +135,7 @@ export class Palette {
       this.highlightedResultIndex += 1
     }
 
-    this.nextui.focusItem(this.highlightedResultIndex)
+    this.ui.focusItem(this.highlightedResultIndex)
   }
 
   private validateSelection() {
@@ -164,10 +166,10 @@ export class Palette {
       this.dropdownItems.push(dropdownThing)
     })
 
-    this.nextui.showDropdownItems(this.dropdownItems)
+    this.ui.showDropdownItems(this.dropdownItems)
   }
 
   private hideDropdown() {
-    this.nextui.hideDropdown()
+    this.ui.hideDropdown()
   }
 }

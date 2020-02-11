@@ -2,7 +2,7 @@
 
 - [X] Case insensitive search
 - [X] Move the logic to create dropdown buttons in the UI
-- [.] Highlight the highlighted element in the dom with a dashed line
+- [X] Highlight the highlighted element in the dom with a dashed line
 - [ ] Use an arrow if the highlighted element is off the viewport
 - [ ] Focus all interactive element (aria role, input)
 - [ ] Fuzzy search
@@ -10,7 +10,6 @@
 - [ ] Reset clashing styles on the palette
 - [ ] Force the focus style on the page using CSS
 - [ ] Performance test the querySelector and links filtering
-- [ ] Add license
 - [ ] Package and install on my instance of Firefox
 - [ ] Add instructions to the readme to install on Firefox
 
