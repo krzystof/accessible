@@ -1,6 +1,5 @@
-import {PaletteUI, PaletteDOMElements} from './palette-ui'
+import {PaletteUI, PaletteDOMElements, DropdownItem} from './palette-ui'
 import {isFocusable, isLink, getPrettyTagName} from './utils'
-import css from './palette.module.css'
 
 const MAX_DROPDOWN_ITEMS = 5
 
@@ -15,7 +14,7 @@ export class Palette {
   pageFocusedElement: null | Element = null
 
   docElements: HTMLElement[] = []
-  dropdownItems: HTMLButtonElement[] = []
+  dropdownItems: DropdownItem[] = []
 
   highlightedResultIndex: null | number = null
 
@@ -143,60 +142,32 @@ export class Palette {
     }
 
     if (this.highlightedResultIndex === null) {
-      this.dropdownItems[0].click()
+      this.dropdownItems[0].pageElement.click()
       return
     }
 
-    this.dropdownItems[this.highlightedResultIndex].click()
+    this.dropdownItems[this.highlightedResultIndex].pageElement.click()
   }
 
   private showDropdown(elements: HTMLElement[]) {
-    // TODO don't throw away items here
     this.dropdownItems = []
 
-    //TODO build that in the UI!
     elements.forEach((element, index) => {
-      const dropdownButton = document.createElement('button')
-      dropdownButton.classList.add(css['dropdown-result'])
+      const dropdownThing: DropdownItem = {
+        // TODO  get the title attributes, or the aria, or the href  or the value
+        content: element.textContent || 'no content',
+        kind: getPrettyTagName(element.tagName),
+        action: isLink(element) ? element.href : '',
+        pageElement: element,
+      }
 
-      const t = element.textContent || 'no content' // TODO  get the title attributes, or the aria, or the href  or the value
-
-      const elementType = getPrettyTagName(element.tagName)
-
-      dropdownButton.title = `Reference to ${elementType} with content ${t}`
-
-      dropdownButton.innerHTML = `
-        <div class="${css['dropdown-result__text']}">${t}</div>
-        <div class="${css['dropdown-result__node']}">
-          <span class="${css['dropdown-result__node-type']}">${elementType}</span>
-          <span>${isLink(element) ? element.href : ''}</span>
-        </div>
-      `
-
-      dropdownButton.addEventListener('click', (event: Event) => {
-        element.click()
-        this.hide()
-        event.stopPropagation()
-      })
-
-      dropdownButton.addEventListener('keyup', (event: KeyboardEvent) => {
-        if (event.ctrlKey && event.key === 'e') {
-          this.pageFocusedElement = null
-          element.focus()
-          this.hide()
-          event.stopPropagation()
-        }
-      })
-
-      this.dropdownItems.push(dropdownButton)
+      this.dropdownItems.push(dropdownThing)
     })
 
     this.nextui.showDropdownItems(this.dropdownItems)
   }
 
   private hideDropdown() {
-    // TODO don't throw away items here
-    this.dropdownItems = []
     this.nextui.hideDropdown()
   }
 }

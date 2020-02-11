@@ -1,7 +1,8 @@
 # WIP - Unreleased
 
 - [X] Case insensitive search
-- [ ] Highlight the highlighted element in the dom with a dashed line
+- [X] Move the logic to create dropdown buttons in the UI
+- [.] Highlight the highlighted element in the dom with a dashed line
 - [ ] Use an arrow if the highlighted element is off the viewport
 - [ ] Focus all interactive element (aria role, input)
 - [ ] Fuzzy search

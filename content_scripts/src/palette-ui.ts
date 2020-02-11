@@ -18,8 +18,17 @@ type PaletteHandlers = {
   onValidate: () => void
 }
 
+export type DropdownItem = {
+  content: string
+  kind: 'link' | 'button' | 'unknown'
+  action: string
+  pageElement: HTMLElement
+}
+
 export class PaletteUI {
   els: PaletteDOMElements
+  onClose: () => void
+
   constructor(els: PaletteDOMElements, eventHandlers: PaletteHandlers) {
     this.els = els
 
@@ -40,6 +49,8 @@ export class PaletteUI {
     this.els.wrap.appendChild(this.els.inputWrap)
     this.els.wrap.appendChild(this.els.dropdown)
     this.els.rootEl.appendChild(this.els.wrap)
+
+    this.onClose = eventHandlers.onClose
 
     // Attach event handlers
     this.els.input.addEventListener('input', eventHandlers.onSearch)
@@ -116,11 +127,14 @@ export class PaletteUI {
     this.els.dropdown.hidden = true
   }
 
-  showDropdownItems(buttons: HTMLButtonElement[]) {
+  showDropdownItems(items: DropdownItem[]) {
     this.els.dropdown.innerHTML = ''
-    this.els.dropdown.hidden = buttons.length === 0
+    this.els.dropdown.hidden = items.length === 0
 
-    buttons.forEach(button => this.els.dropdown.appendChild(button))
+    items.forEach(item => {
+      const button = this.createButtonFromItem(item)
+      this.els.dropdown.appendChild(button)
+    })
   }
 
   focusItem(item: 'input' | number) {
@@ -132,5 +146,37 @@ export class PaletteUI {
         button.focus()
       }
     }
+  }
+
+  // Maybe extract this to a factory function bound in the constructor
+  private createButtonFromItem(item: DropdownItem) {
+    const dropdownButton = document.createElement('button')
+    dropdownButton.classList.add(css['dropdown-result'])
+
+    dropdownButton.title = `Reference to ${item.kind} with content ${item.content}`
+
+    dropdownButton.innerHTML = `
+      <div class="${css['dropdown-result__text']}">${item.content}</div>
+      <div class="${css['dropdown-result__node']}">
+        <span class="${css['dropdown-result__node-type']}">${item.kind}</span>
+        <span>${item.action}</span>
+      </div>
+    `
+
+    dropdownButton.addEventListener('click', (event: Event) => {
+      item.pageElement.click()
+      this.onClose()
+      event.stopPropagation()
+    })
+
+    dropdownButton.addEventListener('keyup', (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === 'e') {
+        item.pageElement.focus()
+        this.onClose()
+        event.stopPropagation()
+      }
+    })
+
+    return dropdownButton
   }
 }
