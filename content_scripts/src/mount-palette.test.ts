@@ -386,15 +386,15 @@ describe('Click interactive element with the keyboard', () => {
     fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
     fireEvent.input(palette.getSearchInput(), {target: {value: 'cat'}})
 
-    expect(queries.getByTestId(body,'cats-link')).not.toHaveClass(css['highlighted-target'])
-    expect(queries.getByTestId(body,'caterpillars-link')).not.toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body, 'cats-link')).not.toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body, 'caterpillars-link')).not.toHaveClass(css['highlighted-target'])
 
     fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
-    expect(queries.getByTestId(body,'cats-link')).toHaveClass(css['highlighted-target'])
-    expect(queries.getByTestId(body,'caterpillars-link')).not.toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body, 'cats-link')).toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body, 'caterpillars-link')).not.toHaveClass(css['highlighted-target'])
 
     fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
-    expect(queries.getByTestId(body,'cats-link')).not.toHaveClass(css['highlighted-target'])
-    expect(queries.getByTestId(body,'caterpillars-link')).toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body, 'cats-link')).not.toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body, 'caterpillars-link')).toHaveClass(css['highlighted-target'])
   })
 })
