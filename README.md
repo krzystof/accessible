@@ -30,6 +30,9 @@
 - `Enter` on an highlighted item navigates to the link
 - `Escape` or `ctrl-c` closes the palette
 
+The extension will also override the focus state on the page with a big red border.
+Focus states are too often overriden and it can be hard to know which element is focused on the page. I believe that users should be able to define their own preferred focus state as a browser setting. (Coming later: define your custom styles for the focus state)
+
 ## Installation
 
 The extension is not stable enough yet to install it on your Firefox instance via the addon store (Chromium browsers not tested, coming later).

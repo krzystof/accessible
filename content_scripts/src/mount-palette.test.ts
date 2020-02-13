@@ -1,6 +1,7 @@
 import {screen, queries, wait, within, fireEvent} from '@testing-library/dom'
 import {mountPalette} from './mount-palette'
 import '@testing-library/jest-dom'
+import css from './palette.module.css'
 
 /**
  * Use this to create a brand new body without event listeners
@@ -368,5 +369,32 @@ describe('Click interactive element with the keyboard', () => {
 
     expect(palette.getDropdown().getByTitle('Reference to link with content cats')).toBeInTheDocument()
     expect(palette.getDropdown().getByTitle('Reference to button with content Send love to cats')).toBeInTheDocument()
+  })
+
+  test('Add a class to the page element matching the highlighted element ', async () => {
+    givenBodyHTML(`
+      <div>
+        <a href="#cats" data-testid="cats-link">cats</a>
+        <a href="#caterpillars" data-testid="caterpillars-link">caterpillars</a>
+      </div>
+    `)
+
+    const {body, palette} = testPalette(document)
+
+    await wait(() => expect(palette.getSearchInput()).toBeInTheDocument())
+
+    fireEvent.keyUp(body, {key: 'e', ctrlKey: true})
+    fireEvent.input(palette.getSearchInput(), {target: {value: 'cat'}})
+
+    expect(queries.getByTestId(body,'cats-link')).not.toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body,'caterpillars-link')).not.toHaveClass(css['highlighted-target'])
+
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
+    expect(queries.getByTestId(body,'cats-link')).toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body,'caterpillars-link')).not.toHaveClass(css['highlighted-target'])
+
+    fireEvent.keyUp(palette.getSearchInput(), {key: 'n', ctrlKey: true})
+    expect(queries.getByTestId(body,'cats-link')).not.toHaveClass(css['highlighted-target'])
+    expect(queries.getByTestId(body,'caterpillars-link')).toHaveClass(css['highlighted-target'])
   })
 })
