@@ -9,20 +9,13 @@ function mountPalette(doc: Document) {
     return Promise.resolve(elements)
   }
 
-  const palette = new Palette(
-    {
-      rootEl: doc.createElement('div'),
-      wrap: doc.createElement('div'),
-      dropdown: doc.createElement('div'),
-      inputWrap: doc.createElement('div'),
-      input: doc.createElement('input'),
-    },
-    {
-      getInteractiveElements,
-    }
-  )
+  const rootEl = doc.createElement('div')
 
-  doc.body.appendChild(palette.rootEl())
+  const palette = new Palette(rootEl, {
+    getInteractiveElements,
+  })
+
+  doc.body.appendChild(rootEl)
 
   doc.body.addEventListener('keyup', (event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === 'e') {

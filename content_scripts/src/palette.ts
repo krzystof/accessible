@@ -1,4 +1,4 @@
-import {PaletteUI, PaletteDOMElements, DropdownItem} from './palette-ui'
+import {PaletteUI, DropdownItem} from './palette-ui'
 import {isFocusable, isLink, getPrettyTagName} from './utils'
 
 const MAX_DROPDOWN_ITEMS = 5
@@ -18,8 +18,8 @@ export class Palette {
 
   highlightedResultIndex: null | number = null
 
-  constructor(elements: PaletteDOMElements, callbacks: PaletteCallbacks) {
-    this.ui = new PaletteUI(elements, {
+  constructor(rootEl: HTMLDivElement, callbacks: PaletteCallbacks) {
+    this.ui = new PaletteUI(rootEl, {
       onSearch: this.filterPageElements.bind(this),
       onClearSearch: this.hideDropdown.bind(this),
       onClose: (element?: HTMLElement) => this.hide(element),
@@ -61,10 +61,6 @@ export class Palette {
   }
 
   // Public Palette API
-
-  rootEl() {
-    return this.ui.els.rootEl
-  }
 
   showOrFocus(focusedElement: null | Element) {
     if (this.isVisible()) {

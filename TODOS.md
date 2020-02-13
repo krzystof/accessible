@@ -3,6 +3,7 @@
 - [X] Case insensitive search
 - [X] Move the logic to create dropdown buttons in the UI
 - [X] Highlight the highlighted element in the dom with a dashed line
+- [X] Refactor the ui to add a template rather than imperative js
 - [ ] Use an arrow if the highlighted element is off the viewport
 - [ ] Focus all interactive element (aria role, input)
 - [ ] Fuzzy search
