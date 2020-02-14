@@ -5,6 +5,7 @@
 - [X] Highlight the highlighted element in the dom with a dashed line
 - [X] Refactor the ui to add a template rather than imperative js
 - [X] Add test for the related element style
+- [X] Use postcss
 - [ ] Use an arrow if the highlighted element is off the viewport
 - [ ] Re-run the node querySelector when the palette opens
 - [ ] --- Reinstall locally
@@ -13,12 +14,12 @@
 - [ ] --- Reinstall locally
 - [ ] Allow to list all links or button or inputs on the page
 - [ ] Reset clashing styles on the palette
-- [ ] Force the focus style on the page using CSS (it's still overriden sometimes)
-- [ ] --- Release
+- [ ] --- Prep for release
 - [ ] Sign the extension using `web-ext`
 - [ ] Package and install on my instance of Firefox
 - [ ] Add instructions to the readme to install on Firefox
-- [ ] Add artifacts to github
+- [ ] Add artifacts on github
+- [ ] --- Release
 
 ## v0.X - User Focus Styles (settings)
 ## v0.Y - Inline help in the UI
@@ -44,10 +45,11 @@
 * Optimize the node selection when the pages change (use MutationObserver)
 * Debounce the filtering
 * Make shortcuts configurable
-* Use postcss
 * Performance test the querySelector and links filtering
+* User defined focus styles
 * --- less important
 * navigate focus with arrows or hjkl
+* use a more accessible color on dark / red websites
 * Command: help or ?: show help menu
 * copy: copy the html or text of an element
 * search or /: search text in page
